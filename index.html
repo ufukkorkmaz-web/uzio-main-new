@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Uzio English</title>
+<title>Uzio</title>
 <meta name="theme-color" content="#f2f2f7">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -186,6 +186,38 @@ button { font: inherit; color: inherit; }
   .actions { gap: 8px; }
   .round-btn { width: 44px; height: 44px; }
   .lang-menu { width: min(210px, calc(100vw - 32px)); }
+}
+
+
+/* ---------- Expanding search pill ---------- */
+.search-pill {
+  width: 46px; height: 46px; border-radius: 999px; display: flex; align-items: center; overflow: hidden;
+  transition: width .48s var(--spring), transform .35s var(--spring), box-shadow .3s ease;
+  position: relative; flex: none;
+}
+.search-pill:hover, .search-pill:focus-within {
+  width: 220px; transform: scale(1.02);
+  box-shadow: inset 0 0 0 .5px var(--glass-edge), inset 0 1.5px 0 var(--spec), var(--glass-shadow), 0 8px 28px color-mix(in srgb, var(--accent) 16%, transparent);
+}
+.search-btn {
+  width: 46px; height: 46px; padding: 0; border: 0; background: transparent; display: grid; place-items: center; flex: none; cursor: pointer; color: var(--fg);
+}
+.search-btn svg { width: 21px; height: 21px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: transform .35s var(--spring); }
+.search-pill:hover .search-btn svg, .search-pill:focus-within .search-btn svg { transform: scale(1.08); }
+.search-input {
+  width: 158px; min-width: 0; padding: 0 16px 0 1px; border: 0; outline: 0; background: transparent; color: var(--fg);
+  font: inherit; font-size: 14px; font-weight: 600; opacity: 0; transform: translateX(-6px); pointer-events: none;
+  transition: opacity .22s ease .08s, transform .35s var(--spring);
+}
+.search-input::placeholder { color: var(--fg2); font-weight: 500; }
+.search-pill:hover .search-input, .search-pill:focus-within .search-input { opacity: 1; transform: none; pointer-events: auto; }
+.search-hit { animation: searchPulse .9s var(--smooth) 1; }
+@keyframes searchPulse { 0%,100% { box-shadow: var(--card-shadow); } 45% { box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 30%, transparent), 0 16px 38px color-mix(in srgb, var(--accent) 24%, transparent); } }
+@media (max-width: 760px) {
+  .search-pill { width: 44px; height: 44px; }
+  .search-btn { width: 44px; height: 44px; }
+  .search-pill:hover, .search-pill:focus-within { width: min(190px, 42vw); }
+  .search-input { width: calc(100% - 44px); }
 }
 
 /* ---------- Back to top ---------- */
@@ -442,6 +474,38 @@ h1 { margin: 0; font-size: clamp(36px, 6.4vw, 60px); line-height: 1.03; font-wei
 .badge { display: grid; justify-items: center; gap: 6px; padding: 20px 12px 16px; text-align: center; border-radius: 24px; background: var(--fill); transition: transform .5s var(--spring); }
 .badge:hover { transform: translateY(-4px) scale(1.03); }
 .badge .coin { width: 70px; height: 70px; border-radius: 50%; display: grid; place-items: center; font-size: 34px; margin-bottom: 4px; background: radial-gradient(circle at 30% 25%, color-mix(in srgb, var(--c) 45%, #fff), var(--c) 65%); box-shadow: inset 0 0 0 3px rgba(255, 255, 255, .45), inset 0 -6px 10px rgba(0, 0, 0, .15), 0 10px 20px color-mix(in srgb, var(--c) 38%, transparent); }
+
+/* Perk shop: subtle growth + perk-colour glow */
+.perk-item {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  will-change: transform, background-color, box-shadow;
+  transition: transform .38s var(--spring), background-color .24s ease, box-shadow .28s ease, color .22s ease;
+}
+.perk-item::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 28%, color-mix(in srgb, var(--c) 40%, transparent), transparent 68%);
+  opacity: 0;
+  transform: scale(.84);
+  transition: opacity .24s ease, transform .38s var(--spring);
+}
+.perk-item > * { position: relative; z-index: 1; }
+.perk-item:hover {
+  transform: translateY(-4px) scale(1.045);
+  background: color-mix(in srgb, var(--c) 24%, var(--card));
+  box-shadow: 0 18px 38px color-mix(in srgb, var(--c) 32%, transparent), inset 0 0 0 1px color-mix(in srgb, var(--c) 38%, transparent);
+}
+.perk-item:hover::before { opacity: 1; transform: scale(1.14); }
+.perk-item:hover .coin {
+  transform: scale(1.08);
+  box-shadow: inset 0 0 0 3px rgba(255,255,255,.55), inset 0 -6px 10px rgba(0,0,0,.15), 0 13px 26px color-mix(in srgb, var(--c) 52%, transparent);
+}
+.perk-item .coin { transition: transform .3s var(--spring), box-shadow .28s ease; }
 .badge b { font-size: 15px; font-weight: 700; letter-spacing: -.01em; }
 .badge small { color: var(--fg2); font-size: 12.5px; line-height: 1.3; }
 .badge.lock { background: transparent; box-shadow: inset 0 0 0 1.5px var(--sep); }
@@ -452,7 +516,7 @@ h1 { margin: 0; font-size: clamp(36px, 6.4vw, 60px); line-height: 1.03; font-wei
 .orb-body { position: relative; display: block; width: 128px; height: 128px; animation: orbfloat 4.2s ease-in-out infinite; filter: drop-shadow(0 10px 14px var(--orb-shadow)); }
 .uzio-orb canvas { display: block; width: 100%; height: 100%; }
 .orb-fx { position: absolute; inset: 0; pointer-events: none; overflow: visible; }
-.hat { position: absolute; inset: 0; opacity: 0; transform-origin: 50% 28%; will-change: transform, opacity; }
+.hat { display:none !important; }
 .hat svg { display: block; width: 100%; height: 100%; overflow: visible; }
 .hat .prop { transform-box: fill-box; transform-origin: center; animation: propspin .38s linear infinite; }
 @keyframes propspin { 0% { transform: scaleX(1); } 50% { transform: scaleX(-1); } 100% { transform: scaleX(1); } }
@@ -561,7 +625,7 @@ h1 { margin: 0; font-size: clamp(36px, 6.4vw, 60px); line-height: 1.03; font-wei
 &lt;head&gt;
 &lt;meta charset=&quot;utf-8&quot;&gt;
 &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,initial-scale=1,viewport-fit=cover&quot;&gt;
-&lt;title&gt;Uzio English&lt;/title&gt;
+&lt;title&gt;Uzio&lt;/title&gt;
 &lt;meta name=&quot;theme-color&quot; content=&quot;#f2f2f7&quot;&gt;
 &lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.googleapis.com&quot;&gt;
 &lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.gstatic.com&quot; crossorigin&gt;
@@ -607,7 +671,7 @@ h1{margin:18px 0 16px;font-size:clamp(46px,6.8vw,88px);line-height:.96;letter-sp
 .visual{position:relative;height:min(70vh,650px);min-height:420px;display:grid;place-items:center;isolation:isolate}.halo{position:absolute;width:min(42vw,510px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--accent) 25%,transparent) 0 34%,color-mix(in srgb,var(--purple) 12%,transparent) 48%,transparent 70%);filter:blur(10px);animation:pulse 5s ease-in-out infinite}@keyframes pulse{50%{transform:scale(1.08);opacity:.82}}
 .uzio-orb{position:relative;z-index:5;display:block;width:min(34vw,390px);aspect-ratio:1;color:var(--fg);text-decoration:none;outline:none;cursor:pointer}
 .orb-body{position:relative;display:block;width:100%;height:100%;animation:orbfloat 4.2s ease-in-out infinite;filter:drop-shadow(0 24px 34px rgba(60,70,150,.24));transform-origin:center}
-.uzio-orb canvas{display:block;width:100%;height:100%}.orb-fx{position:absolute;inset:0;pointer-events:none;overflow:visible}.hat{position:absolute;inset:0;opacity:0;transform-origin:50% 28%;will-change:transform,opacity}.hat svg{display:block;width:100%;height:100%;overflow:visible}.hat .prop{transform-box:fill-box;transform-origin:center;animation:propspin .38s linear infinite}@keyframes propspin{0%{transform:scaleX(1)}50%{transform:scaleX(-1)}100%{transform:scaleX(1)}}
+.uzio-orb canvas{display:block;width:100%;height:100%}.orb-fx{position:absolute;inset:0;pointer-events:none;overflow:visible}.hat{display:none!important}.hat svg{display:block;width:100%;height:100%;overflow:visible}.hat .prop{transform-box:fill-box;transform-origin:center;animation:propspin .38s linear infinite}@keyframes propspin{0%{transform:scaleX(1)}50%{transform:scaleX(-1)}100%{transform:scaleX(1)}}
 .uzio-orb.no-gl canvas{background:conic-gradient(from 0deg,#1ea7ff,#ff2d75,#b8ff1f,#b44dff,#ffa11a,#1ea7ff);clip-path:circle(37%)}@keyframes orbfloat{50%{transform:translateY(-12px)}}
 .bubble{position:absolute;padding:13px 17px;border-radius:20px;font-size:14px;font-weight:700;letter-spacing:-.01em;animation:bob 5s ease-in-out infinite}.bubble b{display:block;font-size:19px;line-height:1.05;margin-bottom:2px}.b1{left:1%;top:18%;animation-delay:-1s}.b2{right:0;top:24%;animation-delay:-2.4s}.b3{left:8%;bottom:15%;animation-delay:-3.2s}@keyframes bob{50%{transform:translateY(-8px) rotate(1deg)}}
 .spark{position:absolute;width:10px;height:10px;border-radius:50%;background:var(--c);box-shadow:0 0 18px var(--c);animation:tw 2.4s ease-in-out infinite alternate}.s1{--c:var(--pink);right:16%;bottom:12%}.s2{--c:var(--green);left:16%;top:9%;animation-delay:-1.1s}.s3{--c:var(--orange);right:11%;top:9%;animation-delay:-.5s}@keyframes tw{to{opacity:.25;transform:scale(.6)}}
@@ -629,7 +693,7 @@ h1{margin:18px 0 16px;font-size:clamp(46px,6.8vw,88px);line-height:.96;letter-sp
 &lt;div class=&quot;wallpaper&quot; aria-hidden=&quot;true&quot;&gt;&lt;i&gt;&lt;/i&gt;&lt;i&gt;&lt;/i&gt;&lt;i&gt;&lt;/i&gt;&lt;/div&gt;
 &lt;div class=&quot;shell&quot;&gt;
   &lt;header class=&quot;topbar&quot;&gt;
-    &lt;a class=&quot;brand&quot; href=&quot;#&quot; aria-label=&quot;Uzio English&quot;&gt;&lt;span class=&quot;brand-mark&quot;&gt;U&lt;/span&gt;&lt;span&gt;Uzio&lt;/span&gt;&lt;/a&gt;
+    &lt;a class=&quot;brand&quot; href=&quot;#&quot; aria-label=&quot;Uzio&quot;&gt;&lt;span class=&quot;brand-mark&quot;&gt;U&lt;/span&gt;&lt;span&gt;Uzio&lt;/span&gt;&lt;/a&gt;
     &lt;div class=&quot;actions&quot;&gt;
       &lt;div class=&quot;pop&quot; id=&quot;langPop&quot;&gt;
         &lt;button class=&quot;round-btn glass lang-btn&quot; id=&quot;langBtn&quot; type=&quot;button&quot; aria-expanded=&quot;false&quot; aria-controls=&quot;langMenu&quot;&gt;&lt;span id=&quot;langCode&quot;&gt;EN&lt;/span&gt;&lt;/button&gt;
@@ -643,7 +707,7 @@ h1{margin:18px 0 16px;font-size:clamp(46px,6.8vw,88px);line-height:.96;letter-sp
       &lt;div class=&quot;pop&quot; id=&quot;morePop&quot;&gt;
         &lt;button class=&quot;round-btn glass&quot; id=&quot;moreBtn&quot; type=&quot;button&quot; aria-label=&quot;Open menu&quot; aria-expanded=&quot;false&quot; aria-controls=&quot;moreMenu&quot;&gt;&lt;svg viewBox=&quot;0 0 24 24&quot;&gt;&lt;path d=&quot;M4 6.5h16M4 12h16M4 17.5h16&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;
         &lt;div class=&quot;menu glass&quot; id=&quot;moreMenu&quot; inert&gt;
-          &lt;a class=&quot;menu-item&quot; href=&quot;main.html&quot; id=&quot;menuEnter&quot;&gt;Enter Uzio&lt;/a&gt;
+          &lt;a class=&quot;menu-item&quot; href=&quot;main.html&quot; id=&quot;menuEnter&quot;&gt;Enter the game&lt;/a&gt;
           &lt;button class=&quot;menu-item theme-row&quot; type=&quot;button&quot; id=&quot;themeToggle&quot;&gt;&lt;span id=&quot;themeLabel&quot;&gt;Dark mode&lt;/span&gt;&lt;span class=&quot;switch&quot; aria-hidden=&quot;true&quot;&gt;&lt;i&gt;&lt;/i&gt;&lt;/span&gt;&lt;/button&gt;
         &lt;/div&gt;
       &lt;/div&gt;
@@ -652,24 +716,24 @@ h1{margin:18px 0 16px;font-size:clamp(46px,6.8vw,88px);line-height:.96;letter-sp
 
   &lt;main class=&quot;hero&quot;&gt;
     &lt;section class=&quot;copy&quot;&gt;
-      &lt;h1 id=&quot;headline&quot;&gt;Meet &lt;span class=&quot;grad&quot;&gt;Uzio.&lt;/span&gt;&lt;br&gt;Your learning buddy.&lt;/h1&gt;
-      &lt;p class=&quot;lead&quot; id=&quot;lead&quot;&gt;Play, practise, watch and speak your way to better English — with challenges that adapt to you.&lt;/p&gt;
+      &lt;h1 id=&quot;headline&quot;&gt;Meet &lt;span class=&quot;grad&quot;&gt;Uzio.&lt;/span&gt;&lt;br&gt;Your game master.&lt;/h1&gt;
+      &lt;p class=&quot;lead&quot; id=&quot;lead&quot;&gt;Play, compete, unlock rewards and let Uzio build challenges that adapt to you.&lt;/p&gt;
       &lt;div class=&quot;ctas&quot;&gt;
-        &lt;a class=&quot;btn primary&quot; href=&quot;main.html&quot; id=&quot;startBtn&quot;&gt;Start learning &lt;span aria-hidden=&quot;true&quot;&gt;→&lt;/span&gt;&lt;/a&gt;
-        &lt;a class=&quot;btn secondary&quot; href=&quot;main.html#play&quot; id=&quot;tryBtn&quot;&gt;Try a quick game&lt;/a&gt;
+        &lt;a class=&quot;btn primary&quot; href=&quot;main.html&quot; id=&quot;startBtn&quot;&gt;Enter the game &lt;span aria-hidden=&quot;true&quot;&gt;→&lt;/span&gt;&lt;/a&gt;
+        &lt;a class=&quot;btn secondary&quot; href=&quot;main.html#play&quot; id=&quot;tryBtn&quot;&gt;Quick play&lt;/a&gt;
       &lt;/div&gt;
       &lt;div class=&quot;proof&quot; aria-label=&quot;Highlights&quot;&gt;
-        &lt;span id=&quot;proof1&quot;&gt;⚡ Quick activities&lt;/span&gt;&lt;span class=&quot;dot&quot;&gt;&lt;/span&gt;&lt;span id=&quot;proof2&quot;&gt;🎯 Adaptive practice&lt;/span&gt;&lt;span class=&quot;dot&quot;&gt;&lt;/span&gt;&lt;span id=&quot;proof3&quot;&gt;💬 Real English&lt;/span&gt;
+        &lt;span id=&quot;proof1&quot;&gt;⚡ Quick rounds&lt;/span&gt;&lt;span class=&quot;dot&quot;&gt;&lt;/span&gt;&lt;span id=&quot;proof2&quot;&gt;🎯 Adaptive challenges&lt;/span&gt;&lt;span class=&quot;dot&quot;&gt;&lt;/span&gt;&lt;span id=&quot;proof3&quot;&gt;🏆 XP &amp; rewards&lt;/span&gt;
       &lt;/div&gt;
     &lt;/section&gt;
 
     &lt;section class=&quot;visual&quot; aria-label=&quot;Uzio character&quot;&gt;
       &lt;div class=&quot;halo&quot;&gt;&lt;/div&gt;
       &lt;div class=&quot;bubble glass b1&quot;&gt;&lt;b&gt;Play&lt;/b&gt;&lt;span id=&quot;bubble1&quot;&gt;2–5 min&lt;/span&gt;&lt;/div&gt;
-      &lt;div class=&quot;bubble glass b2&quot;&gt;&lt;b&gt;Speak&lt;/b&gt;&lt;span id=&quot;bubble2&quot;&gt;Build confidence&lt;/span&gt;&lt;/div&gt;
-      &lt;div class=&quot;bubble glass b3&quot;&gt;&lt;b&gt;+35 XP&lt;/b&gt;&lt;span id=&quot;bubble3&quot;&gt;Keep your streak&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;bubble glass b2&quot;&gt;&lt;b&gt;Perks&lt;/b&gt;&lt;span id=&quot;bubble2&quot;&gt;Beat your best&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;bubble glass b3&quot;&gt;&lt;b&gt;+35 XP&lt;/b&gt;&lt;span id=&quot;bubble3&quot;&gt;Protect your streak&lt;/span&gt;&lt;/div&gt;
       &lt;div class=&quot;spark s1&quot;&gt;&lt;/div&gt;&lt;div class=&quot;spark s2&quot;&gt;&lt;/div&gt;&lt;div class=&quot;spark s3&quot;&gt;&lt;/div&gt;
-      &lt;a class=&quot;uzio-orb&quot; href=&quot;uzio_room.html&quot; aria-label=&quot;Enter Uzio&#x27;s Room&quot;&gt;
+      &lt;a class=&quot;uzio-orb&quot; href=&quot;uzio_room.html&quot; aria-label=&quot;Enter the game&#x27;s Room&quot;&gt;
         &lt;span class=&quot;orb-body&quot; id=&quot;orbBody&quot;&gt;
           &lt;canvas id=&quot;uzioOrb&quot; width=&quot;512&quot; height=&quot;512&quot; aria-hidden=&quot;true&quot;&gt;&lt;/canvas&gt;
           &lt;span class=&quot;orb-fx&quot; aria-hidden=&quot;true&quot;&gt;&lt;span class=&quot;hat&quot; id=&quot;orbHat&quot;&gt;&lt;/span&gt;&lt;/span&gt;
@@ -738,7 +802,7 @@ h1{margin:18px 0 16px;font-size:clamp(46px,6.8vw,88px);line-height:.96;letter-sp
   document.addEventListener(&#x27;keydown&#x27;,function(e){if(e.key===&#x27;Escape&#x27;){setPop(langPop,langBtn,langMenu,false);setPop(morePop,moreBtn,moreMenu,false)}});
 
   var copy={
-    en:{code:&#x27;EN&#x27;,headline:&#x27;Meet &lt;span class=&quot;grad&quot;&gt;Uzio.&lt;/span&gt;&lt;br&gt;Your learning buddy.&#x27;,lead:&#x27;Play, practise, watch and speak your way to better English — with challenges that adapt to you.&#x27;,start:&#x27;Start learning&#x27;,try:&#x27;Try a quick game&#x27;,p1:&#x27;⚡ Quick activities&#x27;,p2:&#x27;🎯 Adaptive practice&#x27;,p3:&#x27;💬 Real English&#x27;,b1:&#x27;2–5 min&#x27;,b2:&#x27;Build confidence&#x27;,b3:&#x27;Keep your streak&#x27;,enter:&#x27;Enter Uzio&#x27;,theme:&#x27;Dark mode&#x27;},
+    en:{code:&#x27;EN&#x27;,headline:&#x27;Meet &lt;span class=&quot;grad&quot;&gt;Uzio.&lt;/span&gt;&lt;br&gt;Your game master.&#x27;,lead:&#x27;Play, compete, unlock rewards and let Uzio build challenges that adapt to you.&#x27;,start:&#x27;Enter the game&#x27;,try:&#x27;Quick play&#x27;,p1:&#x27;⚡ Quick rounds&#x27;,p2:&#x27;🎯 Adaptive challenges&#x27;,p3:&#x27;🏆 XP &amp; rewards&#x27;,b1:&#x27;2–5 min&#x27;,b2:&#x27;Beat your best&#x27;,b3:&#x27;Protect your streak&#x27;,enter:&#x27;Enter the game&#x27;,theme:&#x27;Dark mode&#x27;},
     tr:{code:&#x27;TR&#x27;,headline:&#x27;&lt;span class=&quot;grad&quot;&gt;Uzio&lt;/span&gt; ile tanış.&lt;br&gt;Sana ayak uyduran İngilizce.&#x27;,lead:&#x27;Oyna, pratik yap, izle ve konuş. Sana uyum sağlayan görevlerle İngilizceni geliştir.&#x27;,start:&#x27;Öğrenmeye başla&#x27;,try:&#x27;Hızlı bir oyun dene&#x27;,p1:&#x27;⚡ Kısa etkinlikler&#x27;,p2:&#x27;🎯 Kişiye uyarlanan pratik&#x27;,p3:&#x27;💬 Gerçek İngilizce&#x27;,b1:&#x27;2–5 dk&#x27;,b2:&#x27;Özgüvenini geliştir&#x27;,b3:&#x27;Serini sürdür&#x27;,enter:&#x27;Uzio’ya gir&#x27;,theme:&#x27;Karanlık mod&#x27;},
     fr:{code:&#x27;FR&#x27;,headline:&#x27;Découvre &lt;span class=&quot;grad&quot;&gt;Uzio.&lt;/span&gt;&lt;br&gt;Un anglais qui s’adapte à toi.&#x27;,lead:&#x27;Joue, entraîne-toi, regarde et parle pour progresser en anglais avec des défis qui s’adaptent à toi.&#x27;,start:&#x27;Commencer&#x27;,try:&#x27;Essayer un jeu rapide&#x27;,p1:&#x27;⚡ Activités rapides&#x27;,p2:&#x27;🎯 Entraînement adaptatif&#x27;,p3:&#x27;💬 Anglais authentique&#x27;,b1:&#x27;2–5 min&#x27;,b2:&#x27;Prends confiance&#x27;,b3:&#x27;Garde ta série&#x27;,enter:&#x27;Entrer dans Uzio&#x27;,theme:&#x27;Mode sombre&#x27;},
     de:{code:&#x27;DE&#x27;,headline:&#x27;Lerne &lt;span class=&quot;grad&quot;&gt;Uzio&lt;/span&gt; kennen.&lt;br&gt;Englisch, das sich dir anpasst.&#x27;,lead:&#x27;Spiele, übe, schau zu und sprich dich zu besserem Englisch – mit Aufgaben, die sich an dich anpassen.&#x27;,start:&#x27;Jetzt lernen&#x27;,try:&#x27;Schnelles Spiel testen&#x27;,p1:&#x27;⚡ Kurze Aktivitäten&#x27;,p2:&#x27;🎯 Adaptives Üben&#x27;,p3:&#x27;💬 Echtes Englisch&#x27;,b1:&#x27;2–5 Min.&#x27;,b2:&#x27;Selbstvertrauen stärken&#x27;,b3:&#x27;Serie fortsetzen&#x27;,enter:&#x27;Uzio öffnen&#x27;,theme:&#x27;Dunkelmodus&#x27;}
@@ -988,7 +1052,7 @@ h1{margin:18px 0 16px;font-size:clamp(46px,6.8vw,88px);line-height:.96;letter-sp
       } },
       sleepy: { d: 3200, f: function (ph, o) { var s = sin(PI * ph); o.blink = 1 - .88 * s * s; o.gyo = -.45 * s; o.rot = 4 * sin(ph * PI * 2) * s; } }
     };
-    var BORED = [&#x27;wiggle&#x27;, &#x27;yawn&#x27;, &#x27;look&#x27;, &#x27;bounce&#x27;, &#x27;sleepy&#x27;, &#x27;laugh&#x27;, &#x27;laugh&#x27;, &#x27;tipover&#x27;, &#x27;hat&#x27;, &#x27;hat&#x27;, &#x27;hat&#x27;];
+    var BORED = [&#x27;wiggle&#x27;, &#x27;yawn&#x27;, &#x27;look&#x27;, &#x27;bounce&#x27;, &#x27;sleepy&#x27;, &#x27;laugh&#x27;, &#x27;laugh&#x27;, &#x27;tipover&#x27;];
     var mv = null, lastBored = &#x27;&#x27;;
     var nextSpin = last + 10000 + Math.random() * 6000, nextBored = last + 5000;
     function start(name, now) {
@@ -1128,33 +1192,29 @@ h1{margin:18px 0 16px;font-size:clamp(46px,6.8vw,88px);line-height:.96;letter-sp
 </svg>
 
 <header class="bar" id="bar">
-  <a class="brand" href="#home" aria-label="Uzio English home"><span class="brand-mark">U</span><span>Uzio</span></a>
+  <a class="brand" href="#home" aria-label="Uzio home"><span class="brand-mark">U</span><span>Uzio</span></a>
 
   <nav class="tabs glass" id="tabs" aria-label="Main">
     <span class="dropwrap" aria-hidden="true"><i class="d-from"></i><i class="d-bridge"></i><i class="d-head"></i></span>
     <a class="tab" href="#home" data-view="home" style="--c:#1ea7ff">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 10.8 12 3.5l8.5 7.3V19a1.5 1.5 0 0 1-1.5 1.5h-4.2v-6H9.2v6H5A1.5 1.5 0 0 1 3.5 19z"/></svg><span>Home</span></a>
-    <a class="tab" href="#play" data-view="play" style="--c:#ff2d75">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="6.5" width="19" height="11.5" rx="5.75"/><path d="M7.5 12.2h4M9.5 10.2v4"/><circle cx="15.6" cy="11.2" r=".8" fill="currentColor"/><circle cx="17.9" cy="13.4" r=".8" fill="currentColor"/></svg><span>Play</span></a>
-    <a class="tab" href="#practise" data-view="practise" style="--c:#b8ff1f">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.6"/><circle cx="12" cy="12" r=".9" fill="currentColor"/></svg><span>Practise</span></a>
     <a class="tab" href="#watch" data-view="watch" style="--c:#b44dff">
       <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3.5"/><path d="m10.2 9.4 4.4 2.6-4.4 2.6z" fill="currentColor"/></svg><span>Watch</span></a>
-    <a class="tab" href="#my-quest" data-view="my-quest" style="--c:#ffa11a">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.5 4h9v5.2a4.5 4.5 0 0 1-9 0zM7.5 6H4v1a3.2 3.2 0 0 0 3.8 3.1M16.5 6H20v1a3.2 3.2 0 0 1-3.8 3.1M12 13.7V17M8.5 20h7M9.8 17h4.4"/></svg><span>My Quest</span></a>
+    <a class="tab" href="#play" data-view="play" style="--c:#ff2d75">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="6.5" width="19" height="11.5" rx="5.75"/><path d="M7.5 12.2h4M9.5 10.2v4"/><circle cx="15.6" cy="11.2" r=".8" fill="currentColor"/><circle cx="17.9" cy="13.4" r=".8" fill="currentColor"/></svg><span>Play</span></a>
+    <a class="tab" href="#perks" data-view="perks" style="--c:#b8ff1f">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.5 4h9v5.2a4.5 4.5 0 0 1-9 0zM7.5 6H4v1a3.2 3.2 0 0 0 3.8 3.1M16.5 6H20v1a3.2 3.2 0 0 1-3.8 3.1M12 13.7V17M8.5 20h7M9.8 17h4.4"/></svg><span>Perks</span></a>
+    <a class="tab" href="#uzio-ai" data-view="uzio-ai" style="--c:#ffa11a">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.2 2.8c.62 3.42 2.48 5.28 5.9 5.9-3.42.62-5.28 2.48-5.9 5.9-.62-3.42-2.48-5.28-5.9-5.9 3.42-.62 5.28-2.48 5.9-5.9Z"/><path d="M18.1 13.7c.32 1.8 1.28 2.76 3.08 3.08-1.8.32-2.76 1.28-3.08 3.08-.32-1.8-1.28-2.76-3.08-3.08 1.8-.32 2.76-1.28 3.08-3.08Z"/></svg><span>Uzio AI</span></a>
   </nav>
 
   <div class="actions">
-    <div class="lang" id="lang">
-      <button class="round-btn glass lang-btn" id="langBtn" type="button" aria-label="Choose language" aria-expanded="false" aria-controls="langMenu">
-        <span class="lang-code" id="langCode">EN</span>
+
+    <div class="search-pill glass" id="searchPill" role="search">
+      <button class="search-btn" id="searchBtn" type="button" aria-label="Search" title="Search">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.3"/><path d="m15.5 15.5 4.2 4.2"/></svg>
       </button>
-      <div class="lang-menu glass" id="langMenu" inert>
-        <button class="menu-item lang-option" type="button" data-lang="en"><span class="flag">🇬🇧</span><span class="lang-name">English</span><span class="lang-check">✓</span></button>
-        <button class="menu-item lang-option" type="button" data-lang="tr"><span class="flag">🇹🇷</span><span class="lang-name">Türkçe</span><span class="lang-check">✓</span></button>
-        <button class="menu-item lang-option" type="button" data-lang="fr"><span class="flag">🇫🇷</span><span class="lang-name">Français</span><span class="lang-check">✓</span></button>
-        <button class="menu-item lang-option" type="button" data-lang="de"><span class="flag">🇩🇪</span><span class="lang-name">Deutsch</span><span class="lang-check">✓</span></button>
-      </div>
+      <input class="search-input" id="searchInput" type="search" placeholder="Search" autocomplete="off" aria-label="Search">
     </div>
 
     <div class="acct" id="acct">
@@ -1172,6 +1232,18 @@ h1{margin:18px 0 16px;font-size:clamp(46px,6.8vw,88px);line-height:.96;letter-sp
         <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 10h18M7 15h4"/></svg></button>
       <button class="menu-item" type="button" id="replayOnb">Replay welcome
         <svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.6-5.9"/><path d="M4 4v4.5h4.5"/></svg></button>
+      <hr>
+      <div class="menu-lang" id="menuLang">
+        <button class="menu-item menu-lang-toggle" type="button" id="menuLangBtn" aria-expanded="false" aria-controls="langMenu">
+          <span id="menuLangLabel">Language</span><span class="menu-lang-code" id="langCode">EN</span>
+        </button>
+        <div class="menu-lang-options" id="langMenu" hidden>
+          <button class="menu-item lang-option" type="button" data-lang="en"><span class="flag">🇬🇧</span><span class="lang-name">English</span><span class="lang-check">✓</span></button>
+          <button class="menu-item lang-option" type="button" data-lang="tr"><span class="flag">🇹🇷</span><span class="lang-name">Türkçe</span><span class="lang-check">✓</span></button>
+          <button class="menu-item lang-option" type="button" data-lang="fr"><span class="flag">🇫🇷</span><span class="lang-name">Français</span><span class="lang-check">✓</span></button>
+          <button class="menu-item lang-option" type="button" data-lang="de"><span class="flag">🇩🇪</span><span class="lang-name">Deutsch</span><span class="lang-check">✓</span></button>
+        </div>
+      </div>
       <hr>
       <div class="menu-item" style="cursor:default"><span>Dark mode</span>
         <button id="themeToggle" class="switch" type="button" role="switch" aria-checked="false" aria-label="Dark mode">
@@ -1197,8 +1269,8 @@ h1{margin:18px 0 16px;font-size:clamp(46px,6.8vw,88px);line-height:.96;letter-sp
   <div class="panel" id="panel"></div>
 </main>
 
-<a class="uzio-orb" href="#practise" aria-label="Enter Uzio's Room">
-  <span class="orb-label glass">Enter Uzio's Room</span>
+<a class="uzio-orb" href="#uzio-ai" aria-label="Open Uzio AI">
+  <span class="orb-label glass">Open Uzio AI</span>
   <span class="orb-body" id="orbBody">
     <canvas id="uzioOrb" width="256" height="256" aria-hidden="true"></canvas>
     <span class="orb-fx" aria-hidden="true"><span class="hat" id="orbHat"></span></span>
@@ -1235,7 +1307,7 @@ h1{margin:18px 0 16px;font-size:clamp(46px,6.8vw,88px);line-height:.96;letter-sp
 
   /* ---------- Language ---------- */
   var LANG_KEY = 'uzio-language';
-  var langBox = $('lang'), langBtn = $('langBtn'), langMenu = $('langMenu'), langCode = $('langCode');
+  var langMenu = $('langMenu'), langCode = $('langCode'), menuLang = $('menuLang'), menuLangBtn = $('menuLangBtn'), menuLangLabel = $('menuLangLabel');
   var currentLang = 'en';
   try { currentLang = localStorage.getItem(LANG_KEY) || 'en'; } catch (e) {}
   if (!/^(en|tr|fr|de)$/.test(currentLang)) currentLang = 'en';
@@ -1244,7 +1316,7 @@ h1{margin:18px 0 16px;font-size:clamp(46px,6.8vw,88px);line-height:.96;letter-sp
     tr: {
       'Home':'Ana Sayfa','Play':'Oyna','Practise':'Pratik Yap','Watch':'İzle','My Quest':'Görevim',
       'Account':'Hesap','Settings':'Ayarlar','My Plan':'Planım','Replay welcome':'Karşılama ekranını yeniden göster','Dark mode':'Karanlık mod',
-      'Back to top':'Başa dön','Enter Uzio\'s Room':'Uzio’nun Odasına Gir',
+      'Back to top':'Başa dön','Enter the game\'s Room':'Uzio’nun Odasına Gir',
       'Ready for some English? Pick something fun, continue your quest, or ask Uzio for a challenge.':'Biraz İngilizceye hazır mısın? Eğlenceli bir şey seç, görevine devam et ya da Uzio’dan bir meydan okuma iste.',
       'Choose a game. Beat your best.':'Bir oyun seç. Kendi rekorunu geç.','Fast English games for vocabulary, grammar, reading, listening and English IRL.':'Kelime, dil bilgisi, okuma, dinleme ve günlük İngilizce için hızlı oyunlar.',
       'Train one skill at a time':'Her seferinde bir beceri geliştir','Choose what you want to improve. Uzio can make each activity easier, harder or completely new.':'Geliştirmek istediğin beceriyi seç. Uzio her etkinliği daha kolay, daha zor veya tamamen yeni hâle getirebilir.',
@@ -1257,23 +1329,28 @@ h1{margin:18px 0 16px;font-size:clamp(46px,6.8vw,88px);line-height:.96;letter-sp
       'Choose a skill':'Bir beceri seç','Uzio adjusts the level as you go':'Uzio ilerledikçe seviyeyi ayarlar','Build useful words and use them in context.':'Kullanışlı kelimeler öğren ve bağlam içinde kullan.','Notice patterns, fix errors and make sentences.':'Kalıpları fark et, hataları düzelt ve cümleler kur.','Role-play, answer and keep a conversation going.':'Rol yap, cevap ver ve konuşmayı sürdür.','Find ideas, clues and details without over-translating.':'Her şeyi çevirmeden fikirleri, ipuçlarını ve ayrıntıları bul.','Catch key words, meaning and natural expressions.':'Anahtar kelimeleri, anlamı ve doğal ifadeleri yakala.','Recommended for you':'Senin için önerilen','Past Simple: tell the story':'Past Simple: hikâyeyi anlat','You know the forms. Now practise using them in a short story instead of another worksheet.':'Yapıları biliyorsun. Şimdi başka bir çalışma kâğıdı yerine kısa bir hikâyede kullanarak pratik yap.','Speaking + grammar':'Konuşma + dil bilgisi','Start challenge':'Göreve başla','Make it yours':'Kendine göre uyarlay','Tell Uzio what you want to practise.':'Uzio’ya ne çalışmak istediğini söyle.',
       'Watch & Try':'İzle ve Dene','Every video ends with one tiny challenge':'Her video küçük bir görevle biter','Save for later':'Daha sonrası için kaydet','NEW':'YENİ',
       'Explorer':'Kâşif','LEVEL':'SEVİYE','660 XP to Level 8':'8. seviyeye 660 XP','Small practice counts':'Küçük pratikler de önemlidir','You used English 4 days in a row. Come back tomorrow to make it 5.':'İngilizceyi art arda 4 gün kullandın. Seriyi 5 güne çıkarmak için yarın tekrar gel.','Skill badges':'Beceri rozetleri','Earn them by using English':'İngilizce kullanarak kazan','Word Wizard':'Kelime Sihirbazı','Learn and use 50 words':'50 kelime öğren ve kullan','Brave Speaker':'Cesur Konuşmacı','Complete 5 speaking challenges':'5 konuşma görevini tamamla','Grammar Detective':'Dil Bilgisi Dedektifi','Fix 20 sentence mistakes':'20 cümle hatasını düzelt','Book Explorer':'Kitap Kâşifi','Finish 5 reading challenges':'5 okuma görevini tamamla','Idiom Hunter':'Deyim Avcısı','Learn 10 English IRL expressions':'10 günlük İngilizce ifadesi öğren','Earned ✓':'Kazanıldı ✓','Our class quest':'Sınıf görevimiz','Everyone contributes':'Herkes katkıda bulunur','2,160 XP to go':'2.160 XP kaldı','Reward: choose the class playlist':'Ödül: sınıf çalma listesini seç',
-      'Hi! I\'m Uzio.':'Merhaba! Ben Uzio.','I\'ll help you practise English. What should I call you?':'İngilizce pratiği yapmana yardım edeceğim. Sana nasıl hitap edeyim?','Your name':'Adın','How do you feel about English?':'İngilizce konusunda kendini nasıl hissediyorsun?','English level':'İngilizce seviyesi','Just starting':'Yeni başlıyorum','I know some words and short sentences.':'Bazı kelimeleri ve kısa cümleleri biliyorum.','Getting there':'İlerliyorum','I can talk about everyday things.':'Günlük konular hakkında konuşabiliyorum.','Pretty confident':'Oldukça kendime güveniyorum','I want to sound more natural.':'Daha doğal konuşmak istiyorum.','What do you like?':'Nelerden hoşlanırsın?','Pick up to 3. I\'ll use them in your practice.':'En fazla 3 tane seç. Bunları pratiklerinde kullanacağım.','Interests':'İlgi alanları','All set':'Her şey hazır','Your home page is ready. You can redo this any time from the menu.':'Ana sayfan hazır. Bunu menüden istediğin zaman yeniden yapabilirsin.','Skip for now':'Şimdilik geç','Back':'Geri','Let\'s go →':'Başlayalım →','Next':'İleri','Pick up to 3 ✨':'En fazla 3 tane seç ✨','Practise':'Pratik Yap','Games':'Oyunlar','Music':'Müzik','Sports':'Spor','Animals':'Hayvanlar','Space':'Uzay','Food':'Yemek','Movies':'Filmler','Technology':'Teknoloji','Art':'Sanat'
+      'Hi! I\'m Uzio.':'Merhaba! Ben Uzio.','I\'ll help you practise English. What should I call you?':'İngilizce pratiği yapmana yardım edeceğim. Sana nasıl hitap edeyim?','Your name':'Adın','How do you like to play?':'İngilizce konusunda kendini nasıl hissediyorsun?','Play style':'İngilizce seviyesi','Just starting':'Yeni başlıyorum','I know some words and short sentences.':'Bazı kelimeleri ve kısa cümleleri biliyorum.','Getting there':'İlerliyorum','I can talk about everyday things.':'Günlük konular hakkında konuşabiliyorum.','Pretty confident':'Oldukça kendime güveniyorum','I want to sound more natural.':'Daha doğal konuşmak istiyorum.','What do you like?':'Nelerden hoşlanırsın?','Pick up to 3. I\'ll use them in your practice.':'En fazla 3 tane seç. Bunları pratiklerinde kullanacağım.','Interests':'İlgi alanları','All set':'Her şey hazır','Your game hub is ready. You can redo this any time from the menu.':'Ana sayfan hazır. Bunu menüden istediğin zaman yeniden yapabilirsin.','Skip for now':'Şimdilik geç','Back':'Geri','Let\'s go →':'Başlayalım →','Next':'İleri','Pick up to 3 ✨':'En fazla 3 tane seç ✨','Practise':'Pratik Yap','Games':'Oyunlar','Music':'Müzik','Sports':'Spor','Animals':'Hayvanlar','Space':'Uzay','Food':'Yemek','Movies':'Filmler','Technology':'Teknoloji','Art':'Sanat'
     },
     fr: {
-      'Home':'Accueil','Play':'Jouer','Practise':'S’entraîner','Watch':'Regarder','My Quest':'Ma quête','Account':'Compte','Settings':'Réglages','My Plan':'Mon programme','Replay welcome':'Revoir l’accueil','Dark mode':'Mode sombre','Back to top':'Retour en haut','Enter Uzio\'s Room':'Entrer dans la chambre d’Uzio',
+      'Home':'Accueil','Play':'Jouer','Practise':'S’entraîner','Watch':'Regarder','My Quest':'Ma quête','Account':'Compte','Settings':'Réglages','My Plan':'Mon programme','Replay welcome':'Revoir l’accueil','Dark mode':'Mode sombre','Back to top':'Retour en haut','Enter the game\'s Room':'Entrer dans la chambre d’Uzio',
       'Ready for some English? Pick something fun, continue your quest, or ask Uzio for a challenge.':'Prêt pour un peu d’anglais ? Choisis une activité amusante, continue ta quête ou demande un défi à Uzio.','Choose a game. Beat your best.':'Choisis un jeu. Bats ton record.','Fast English games for vocabulary, grammar, reading, listening and English IRL.':'Des jeux rapides pour le vocabulaire, la grammaire, la lecture, l’écoute et l’anglais de la vie réelle.','Train one skill at a time':'Travaille une compétence à la fois','Choose what you want to improve. Uzio can make each activity easier, harder or completely new.':'Choisis ce que tu veux améliorer. Uzio peut rendre chaque activité plus facile, plus difficile ou complètement nouvelle.','Watch it. Catch it. Use it.':'Regarde. Repère. Utilise.','Short English videos with a tiny challenge after each one, so watching becomes practice.':'De courtes vidéos en anglais avec un mini-défi après chacune, pour transformer le visionnage en pratique.','See how far you have come':'Vois tes progrès','Build streaks, collect skill badges and level up by actually using English.':'Crée des séries, gagne des badges et monte de niveau en utilisant vraiment l’anglais.',
       'Continue where you left off':'Reprends là où tu t’es arrêté','Find the mystery word from clues. You are 60% through.':'Trouve le mot mystère grâce aux indices. Tu as terminé 60 %.','4 min left':'4 min restantes','Continue ▶':'Continuer ▶','Jump in':'Commencer','Fast games. Instant feedback.':'Jeux rapides. Retour immédiat.','Speak':'Parler','Talk, role-play and build confidence.':'Parle, joue des rôles et prends confiance.','Speaking':'Expression orale','Challenge me':'Défie-moi','Let Uzio choose your next task.':'Laisse Uzio choisir ta prochaine activité.','Adaptive':'Adaptatif','Short video. Tiny challenge after.':'Courte vidéo. Mini-défi ensuite.','Uzio picked this for you':'Uzio a choisi ceci pour toi','Can you beat my vocabulary challenge?':'Peux-tu réussir mon défi de vocabulaire ?','Try it →':'Essayer →',"Today's quest":'Quête du jour','Learn':'Apprendre','5 new words':'5 nouveaux mots','1 quick game':'1 jeu rapide','1 minute with Uzio':'1 minute avec Uzio','English IRL · expression of the day':'Anglais réel · expression du jour','Can you guess what it means before Uzio tells you?':'Peux-tu deviner le sens avant qu’Uzio te le dise ?','Find out →':'Découvrir →',
       'Quick Play':'Jeu rapide','Or let Uzio surprise you':'Ou laisse Uzio te surprendre','Choose a skill':'Choisis une compétence','Uzio adjusts the level as you go':'Uzio adapte le niveau au fur et à mesure','Vocabulary':'Vocabulaire','Grammar':'Grammaire','Reading':'Lecture','Listening':'Compréhension orale','Recommended for you':'Recommandé pour toi','Start challenge':'Commencer le défi','Make it yours':'Personnalise','Tell Uzio what you want to practise.':'Dis à Uzio ce que tu veux travailler.','Watch & Try':'Regarde et essaie','Every video ends with one tiny challenge':'Chaque vidéo se termine par un mini-défi','Save for later':'Enregistrer pour plus tard','NEW':'NOUVEAU','Explorer':'Explorateur','LEVEL':'NIVEAU','Small practice counts':'Chaque petite pratique compte','Skill badges':'Badges de compétence','Earn them by using English':'Gagne-les en utilisant l’anglais','Our class quest':'Quête de la classe','Everyone contributes':'Tout le monde participe',
-      'Hi! I\'m Uzio.':'Salut ! Je suis Uzio.','I\'ll help you practise English. What should I call you?':'Je vais t’aider à pratiquer l’anglais. Comment dois-je t’appeler ?','Your name':'Ton prénom','How do you feel about English?':'Comment te sens-tu en anglais ?','English level':'Niveau d’anglais','Just starting':'Je débute','I know some words and short sentences.':'Je connais quelques mots et phrases courtes.','Getting there':'Je progresse','I can talk about everyday things.':'Je peux parler de choses du quotidien.','Pretty confident':'Assez à l’aise','I want to sound more natural.':'Je veux parler plus naturellement.','What do you like?':'Qu’est-ce que tu aimes ?','Pick up to 3. I\'ll use them in your practice.':'Choisis-en jusqu’à 3. Je les utiliserai dans tes activités.','Interests':'Centres d’intérêt','Your home page is ready. You can redo this any time from the menu.':'Ta page d’accueil est prête. Tu peux recommencer à tout moment depuis le menu.','Skip for now':'Passer pour l’instant','Back':'Retour','Let\'s go →':'C’est parti →','Next':'Suivant','Pick up to 3 ✨':'Choisis-en jusqu’à 3 ✨','Games':'Jeux','Music':'Musique','Sports':'Sports','Animals':'Animaux','Space':'Espace','Food':'Cuisine','Movies':'Films','Technology':'Technologie','Art':'Art'
+      'Hi! I\'m Uzio.':'Salut ! Je suis Uzio.','I\'ll help you practise English. What should I call you?':'Je vais t’aider à pratiquer l’anglais. Comment dois-je t’appeler ?','Your name':'Ton prénom','How do you like to play?':'Comment te sens-tu en anglais ?','Play style':'Niveau d’anglais','Just starting':'Je débute','I know some words and short sentences.':'Je connais quelques mots et phrases courtes.','Getting there':'Je progresse','I can talk about everyday things.':'Je peux parler de choses du quotidien.','Pretty confident':'Assez à l’aise','I want to sound more natural.':'Je veux parler plus naturellement.','What do you like?':'Qu’est-ce que tu aimes ?','Pick up to 3. I\'ll use them in your practice.':'Choisis-en jusqu’à 3. Je les utiliserai dans tes activités.','Interests':'Centres d’intérêt','Your game hub is ready. You can redo this any time from the menu.':'Ta page d’accueil est prête. Tu peux recommencer à tout moment depuis le menu.','Skip for now':'Passer pour l’instant','Back':'Retour','Let\'s go →':'C’est parti →','Next':'Suivant','Pick up to 3 ✨':'Choisis-en jusqu’à 3 ✨','Games':'Jeux','Music':'Musique','Sports':'Sports','Animals':'Animaux','Space':'Espace','Food':'Cuisine','Movies':'Films','Technology':'Technologie','Art':'Art'
     },
     de: {
-      'Home':'Start','Play':'Spielen','Practise':'Üben','Watch':'Ansehen','My Quest':'Meine Mission','Account':'Konto','Settings':'Einstellungen','My Plan':'Mein Plan','Replay welcome':'Begrüßung wiederholen','Dark mode':'Dunkelmodus','Back to top':'Nach oben','Enter Uzio\'s Room':'Uzios Zimmer betreten',
+      'Home':'Start','Play':'Spielen','Practise':'Üben','Watch':'Ansehen','My Quest':'Meine Mission','Account':'Konto','Settings':'Einstellungen','My Plan':'Mein Plan','Replay welcome':'Begrüßung wiederholen','Dark mode':'Dunkelmodus','Back to top':'Nach oben','Enter the game\'s Room':'Uzios Zimmer betreten',
       'Ready for some English? Pick something fun, continue your quest, or ask Uzio for a challenge.':'Bereit für etwas Englisch? Wähle etwas Lustiges, setze deine Mission fort oder bitte Uzio um eine Herausforderung.','Choose a game. Beat your best.':'Wähle ein Spiel. Schlage deinen Rekord.','Fast English games for vocabulary, grammar, reading, listening and English IRL.':'Schnelle Englischspiele für Wortschatz, Grammatik, Lesen, Hören und Englisch im Alltag.','Train one skill at a time':'Trainiere eine Fähigkeit nach der anderen','Choose what you want to improve. Uzio can make each activity easier, harder or completely new.':'Wähle, was du verbessern möchtest. Uzio kann jede Aktivität leichter, schwieriger oder ganz neu gestalten.','Watch it. Catch it. Use it.':'Ansehen. Verstehen. Anwenden.','Short English videos with a tiny challenge after each one, so watching becomes practice.':'Kurze englische Videos mit einer kleinen Aufgabe danach – so wird Zuschauen zur Übung.','See how far you have come':'Sieh, wie weit du gekommen bist','Build streaks, collect skill badges and level up by actually using English.':'Baue Serien auf, sammle Abzeichen und steige auf, indem du Englisch wirklich benutzt.',
       'Continue where you left off':'Mach dort weiter, wo du aufgehört hast','Find the mystery word from clues. You are 60% through.':'Finde das geheimnisvolle Wort mithilfe der Hinweise. Du bist zu 60 % fertig.','4 min left':'Noch 4 Min.','Continue ▶':'Weiter ▶','Jump in':'Loslegen','Fast games. Instant feedback.':'Schnelle Spiele. Sofortiges Feedback.','Speak':'Sprechen','Talk, role-play and build confidence.':'Sprich, spiele Rollen und werde sicherer.','Speaking':'Sprechen','Challenge me':'Fordere mich heraus','Let Uzio choose your next task.':'Lass Uzio deine nächste Aufgabe auswählen.','Adaptive':'Adaptiv','Short video. Tiny challenge after.':'Kurzes Video. Danach eine Mini-Aufgabe.','Uzio picked this for you':'Uzio hat das für dich ausgesucht','Can you beat my vocabulary challenge?':'Schaffst du meine Wortschatz-Challenge?','Try it →':'Ausprobieren →',"Today's quest":'Heutige Mission','Learn':'Lernen','5 new words':'5 neue Wörter','1 quick game':'1 schnelles Spiel','1 minute with Uzio':'1 Minute mit Uzio','English IRL · expression of the day':'Englisch im Alltag · Ausdruck des Tages','Can you guess what it means before Uzio tells you?':'Kannst du die Bedeutung erraten, bevor Uzio sie dir sagt?','Find out →':'Herausfinden →',
       'Quick Play':'Schnelles Spiel','Or let Uzio surprise you':'Oder lass dich von Uzio überraschen','Choose a skill':'Wähle eine Fähigkeit','Uzio adjusts the level as you go':'Uzio passt das Niveau unterwegs an','Vocabulary':'Wortschatz','Grammar':'Grammatik','Reading':'Lesen','Listening':'Hören','Recommended for you':'Für dich empfohlen','Start challenge':'Challenge starten','Make it yours':'Mach es zu deinem','Tell Uzio what you want to practise.':'Sag Uzio, was du üben möchtest.','Watch & Try':'Ansehen & Ausprobieren','Every video ends with one tiny challenge':'Jedes Video endet mit einer kleinen Aufgabe','Save for later':'Für später speichern','NEW':'NEU','Explorer':'Entdecker','LEVEL':'LEVEL','Small practice counts':'Auch kleine Übungen zählen','Skill badges':'Fähigkeitsabzeichen','Earn them by using English':'Verdiene sie, indem du Englisch benutzt','Our class quest':'Unsere Klassenmission','Everyone contributes':'Alle tragen dazu bei',
-      'Hi! I\'m Uzio.':'Hallo! Ich bin Uzio.','I\'ll help you practise English. What should I call you?':'Ich helfe dir beim Englischüben. Wie soll ich dich nennen?','Your name':'Dein Name','How do you feel about English?':'Wie fühlst du dich mit Englisch?','English level':'Englischniveau','Just starting':'Ich fange gerade an','I know some words and short sentences.':'Ich kenne einige Wörter und kurze Sätze.','Getting there':'Ich komme voran','I can talk about everyday things.':'Ich kann über Alltagsthemen sprechen.','Pretty confident':'Ziemlich sicher','I want to sound more natural.':'Ich möchte natürlicher klingen.','What do you like?':'Was magst du?','Pick up to 3. I\'ll use them in your practice.':'Wähle bis zu 3. Ich verwende sie in deinen Übungen.','Interests':'Interessen','Your home page is ready. You can redo this any time from the menu.':'Deine Startseite ist fertig. Du kannst dies jederzeit über das Menü wiederholen.','Skip for now':'Vorerst überspringen','Back':'Zurück','Let\'s go →':'Los geht’s →','Next':'Weiter','Pick up to 3 ✨':'Wähle bis zu 3 ✨','Games':'Spiele','Music':'Musik','Sports':'Sport','Animals':'Tiere','Space':'Weltraum','Food':'Essen','Movies':'Filme','Technology':'Technologie','Art':'Kunst'
+      'Hi! I\'m Uzio.':'Hallo! Ich bin Uzio.','I\'ll help you practise English. What should I call you?':'Ich helfe dir beim Englischüben. Wie soll ich dich nennen?','Your name':'Dein Name','How do you like to play?':'Wie fühlst du dich mit Englisch?','Play style':'Englischniveau','Just starting':'Ich fange gerade an','I know some words and short sentences.':'Ich kenne einige Wörter und kurze Sätze.','Getting there':'Ich komme voran','I can talk about everyday things.':'Ich kann über Alltagsthemen sprechen.','Pretty confident':'Ziemlich sicher','I want to sound more natural.':'Ich möchte natürlicher klingen.','What do you like?':'Was magst du?','Pick up to 3. I\'ll use them in your practice.':'Wähle bis zu 3. Ich verwende sie in deinen Übungen.','Interests':'Interessen','Your game hub is ready. You can redo this any time from the menu.':'Deine Startseite ist fertig. Du kannst dies jederzeit über das Menü wiederholen.','Skip for now':'Vorerst überspringen','Back':'Zurück','Let\'s go →':'Los geht’s →','Next':'Weiter','Pick up to 3 ✨':'Wähle bis zu 3 ✨','Games':'Spiele','Music':'Musik','Sports':'Sport','Animals':'Tiere','Space':'Weltraum','Food':'Essen','Movies':'Filme','Technology':'Technologie','Art':'Kunst'
     }
   };
+
+  /* ---------- Gamification-specific translations ---------- */
+  Object.assign(I18N.tr, {"Perks":"Avantajlar","Uzio AI":"Uzio AI","Your game hub: keep your streak alive, chase XP, complete quests and unlock rewards.":"Oyun merkezinde serini koru, XP kazan, görevleri tamamla ve ödüllerin kilidini aç.","Pick a game. Chase a new high score.":"Bir oyun seç. Yeni bir rekorun peşine düş.","Jump into fast challenges, timed rounds, boss battles and multiplayer-style missions.":"Hızlı görevlere, süreli turlara, boss savaşlarına ve çok oyunculu tarzı görevlere dal.","Watch. Unlock. Play.":"İzle. Kilidi aç. Oyna.","Catch short clips, trailers and strategy drops that reveal new challenges, boosts and secret rewards.":"Yeni görevleri, güçlendirmeleri ve gizli ödülleri açığa çıkaran kısa videoları, fragmanları ve strateji içeriklerini izle.","Your rewards. Your status. Your collection.":"Ödüllerin. Statün. Koleksiyonun.","Spend coins, collect badges, protect streaks and unlock cosmetic perks as you level up.":"Seviye atladıkça coin harca, rozet topla, serini koru ve kozmetik avantajların kilidini aç.","Your AI game master is ready.":"Yapay zekâ oyun yöneticin hazır.","Ask Uzio to build a challenge, remix a game, raise the difficulty or surprise you with a quest.":"Uzio’dan bir görev oluşturmasını, bir oyunu yeniden karıştırmasını, zorluğu artırmasını ya da seni sürpriz bir görevle şaşırtmasını iste.","Featured mission":"Öne çıkan görev","Neon Vault":"Neon Kasa","Clear 3 rounds, keep your combo alive and crack the final vault. You are 60% through.":"3 turu tamamla, kombonu koru ve final kasasını aç. Görevin %60’ını tamamladın.","+120 XP":"+120 XP","2× combo":"2× kombo","Jump in":"Hemen başla","Every action pushes your profile forward":"Her hareket profilini ileri taşır","Fast rounds, boss modes and score attacks.":"Hızlı turlar, boss modları ve skor mücadeleleri.","2–5 min":"2–5 dk","+ XP":"+ XP","Open Play":"Oyna bölümünü aç","Claim rewards, boosts and collection drops.":"Ödülleri, güçlendirmeleri ve koleksiyon içeriklerini al.","Rewards":"Ödüller","Coins":"Coinler","Open Perks":"Avantajları aç","Unlock clips, secrets and challenge drops.":"Videoların, sırların ve görev içeriklerinin kilidini aç.","New drops":"Yeni içerikler","+ bonus":"+ bonus","Open Watch":"İzle bölümünü aç","Let Uzio create your next challenge.":"Bir sonraki görevini Uzio oluştursun.","AI game master":"Yapay zekâ oyun yöneticisi","Open Uzio AI":"Uzio AI’ı aç","Uzio challenge drop":"Uzio görev sürprizi","Want a 90-second boss round?":"90 saniyelik bir boss turuna ne dersin?","Uzio can remix your recent games into a tougher challenge with bonus XP on the line.":"Uzio son oyunlarını bonus XP kazanabileceğin daha zorlu bir göreve dönüştürebilir.","Generate challenge →":"Görev oluştur →","Daily quests":"Günlük görevler","2 / 3 complete":"2 / 3 tamamlandı","Score Hunter":"Skor Avcısı","Beat one personal best":"Bir kişisel rekorunu geç","Combo Keeper":"Kombo Koruyucu","Reach a 5× combo":"5× komboya ulaş","Uzio Dare":"Uzio Meydan Okuması","Complete one AI-generated challenge":"Yapay zekânın oluşturduğu bir görevi tamamla","Limited-time event":"Süreli etkinlik","Double XP Hour":"Çifte XP Saati","Complete any three games before the timer expires to unlock a mystery perk.":"Süre bitmeden üç oyun tamamla ve gizemli bir avantajın kilidini aç.","Enter event →":"Etkinliğe gir →","Game modes":"Oyun modları","Choose your route or let Uzio randomize it":"Rotanı seç ya da Uzio’nun rastgele belirlemesine izin ver","Rapid Fire":"Hızlı Atış","Answer, react and build a combo before time runs out.":"Süre bitmeden cevap ver, tepki göster ve kombo oluştur.","90 sec":"90 sn","Score attack":"Skor saldırısı","Boss Battle":"Boss Savaşı","Survive three stages and defeat the final boss.":"Üç aşamayı geç ve final bossunu yen.","5 min":"5 dk","+180 XP":"+180 XP","Puzzle Drop":"Bulmaca Düşüşü","Solve a chain of clues with fewer hints for more points.":"Daha az ipucuyla bir ipucu zincirini çöz ve daha çok puan kazan.","3 min":"3 dk","Logic":"Mantık","Perfect Run":"Kusursuz Seri","One mistake resets the multiplier. How far can you go?":"Tek hata çarpanı sıfırlar. Ne kadar ilerleyebilirsin?","Hard":"Zor","Combo":"Kombo","Beat Uzio":"Uzio’yu Geç","Race Uzio to the answer and steal the bonus.":"Cevaba Uzio’dan önce ulaş ve bonusu kap.","2 min":"2 dk","AI duel":"Yapay zekâ düellosu","Risk It":"Riske Gir","Choose the safer reward or gamble your points for more.":"Daha güvenli ödülü seç ya da daha fazlası için puanlarını riske at.","High stakes":"Yüksek risk","Quest Run":"Görev Koşusu","Clear connected mini-games to reach the final chest.":"Final sandığına ulaşmak için bağlantılı mini oyunları tamamla.","6–8 min":"6–8 dk","Adventure":"Macera","Surprise Me":"Beni Şaşırt","No choosing. Uzio picks the mode, rule and difficulty.":"Seçim yok. Modu, kuralı ve zorluğu Uzio belirler.","Random":"Rastgele","Bonus XP":"Bonus XP","How top players protect a streak":"En iyi oyuncular serilerini nasıl koruyor","Strategy Drop · 2:10":"Strateji · 2:10","Boss Battle: new mode reveal":"Boss Savaşı: yeni mod tanıtımı","Mode Trailer · 1:35":"Mod Fragmanı · 1:35","3 tricks for a higher combo":"Daha yüksek kombo için 3 taktik","Quick Tip · 2:20":"Hızlı İpucu · 2:20","Mystery Perks explained":"Gizemli Avantajlar anlatılıyor","Reward Drop · 2:05":"Ödül İçeriği · 2:05","Inside the new Quest Run map":"Yeni Görev Koşusu haritasına bakış","Preview · 3:15":"Ön İzleme · 3:15","Uzio AI creates an impossible challenge":"Uzio AI imkânsız bir görev oluşturuyor","Uzio Lab · 2:50":"Uzio Lab · 2:50","Watch drops":"İzleme içerikleri","Some clips unlock quests, boosts or secret game modes":"Bazı videolar görevlerin, güçlendirmelerin veya gizli oyun modlarının kilidini açar","Save for later":"Sonra izlemek için kaydet","Player status":"Oyuncu durumu","660 XP to Level 8":"8. seviyeye 660 XP","Wallet":"Cüzdan","Spend or save":"Harca ya da biriktir","🪙 640 coins":"🪙 640 coin","Earn coins from quests, high scores, streak milestones and special events.":"Görevlerden, yüksek skorlardan, seri dönüm noktalarından ve özel etkinliklerden coin kazan.","🔥 4-day streak":"🔥 4 günlük seri","🏆 12 badges":"🏆 12 rozet","💎 3 rare items":"💎 3 nadir eşya","Perk shop":"Avantaj mağazası","Boosts and collectibles rotate regularly":"Güçlendirmeler ve koleksiyon ürünleri düzenli olarak yenilenir","Streak Shield":"Seri Kalkanı","Protect one missed day":"Kaçırdığın bir günü korur","120 coins":"120 coin","XP Booster":"XP Güçlendirici","Earn 2× XP for 20 minutes":"20 dakika boyunca 2× XP kazan","180 coins":"180 coin","Reroll Token":"Yeniden Çevirme Jetonu","Swap one daily quest instantly":"Bir günlük görevi anında değiştir","90 coins":"90 coin","Rare Drop":"Nadir Ödül","Unlock a random premium cosmetic":"Rastgele premium kozmetik aç","250 coins":"250 coin","Combo Saver":"Kombo Koruyucu","Keep your multiplier after one mistake":"Bir hatadan sonra çarpanını koru","160 coins":"160 coin","Next unlock":"Sıradaki kilit açma","Level 8":"8. Seviye","Mystery Profile Aura":"Gizemli Profil Aurası","660 XP to go":"660 XP kaldı","✨ Cosmetic reward":"✨ Kozmetik ödül","LEVEL":"SEVİYE","Uzio AI · Game Master":"Uzio AI · Oyun Yöneticisi","Tell me how you want to play.":"Nasıl oynamak istediğini söyle.","I can invent a challenge, remix a game, set a handicap, create a boss round or build a quest around your current streak.":"Bir görev tasarlayabilir, oyunu yeniden karıştırabilir, engel belirleyebilir, boss turu oluşturabilir ya da mevcut serine göre bir görev hazırlayabilirim.","Adaptive difficulty":"Uyarlanan zorluk","Fresh rules":"Yeni kurallar","Bonus objectives":"Bonus hedefler","Generate AI challenge":"Yapay zekâ görevi oluştur","Generate challenge":"Görev oluştur","Quick prompts":"Hızlı komutlar","Tap to send to Uzio":"Uzio’ya göndermek için dokun","“Give me a 2-minute challenge with a huge combo bonus.”":"“Bana büyük kombo bonuslu 2 dakikalık bir görev ver.”","“Turn my weakest game into a boss battle.”":"“En zayıf olduğum oyunu bir boss savaşına dönüştür.”","“Surprise me with a risky quest for 200 XP.”":"“200 XP’lik riskli bir görevle beni şaşırt.”","“Make a head-to-head challenge I can play with a friend.”":"“Bir arkadaşımla oynayabileceğim karşılıklı bir görev oluştur.”","Live modifier":"Canlı ayarlayıcı","Difficulty: Spicy 🌶️":"Zorluk: Acılı 🌶️","Uzio is ready to adjust timers, hints, multipliers and rewards while you play.":"Uzio oynarken süreleri, ipuçlarını, çarpanları ve ödülleri ayarlamaya hazır.","+25% XP":"+%25 XP","Fewer hints":"Daha az ipucu","Faster timer":"Daha hızlı sayaç","Uzio can also…":"Uzio ayrıca…","Build the rules around you":"Kuralları sana göre oluşturur","Remix":"Karıştır","Combine two game modes into one new challenge.":"İki oyun modunu tek bir yeni görevde birleştir.","AI":"YZ","Experimental":"Deneysel","Create a Boss":"Boss Oluştur","Generate a multi-stage boss with escalating rules.":"Giderek zorlaşan kurallara sahip çok aşamalı bir boss oluştur.","Boss":"Boss","Build a Quest":"Görev Oluştur","Turn several games into a connected adventure.":"Birden fazla oyunu bağlantılı bir maceraya dönüştür.","Quest":"Görev","Balance It":"Dengele","Tune a challenge so it feels fair but exciting.":"Görevi hem adil hem heyecanlı hissettirecek şekilde ayarla.","Smart":"Akıllı"});
+  Object.assign(I18N.fr, {"Perks":"Avantages","Uzio AI":"Uzio AI","Your game hub: keep your streak alive, chase XP, complete quests and unlock rewards.":"Ton hub de jeu : garde ta série, gagne des XP, termine des quêtes et débloque des récompenses.","Pick a game. Chase a new high score.":"Choisis un jeu. Vise un nouveau record.","Jump into fast challenges, timed rounds, boss battles and multiplayer-style missions.":"Lance-toi dans des défis rapides, des manches chronométrées, des combats de boss et des missions façon multijoueur.","Watch. Unlock. Play.":"Regarde. Débloque. Joue.","Catch short clips, trailers and strategy drops that reveal new challenges, boosts and secret rewards.":"Regarde des clips, bandes-annonces et astuces qui révèlent de nouveaux défis, bonus et récompenses secrètes.","Your rewards. Your status. Your collection.":"Tes récompenses. Ton statut. Ta collection.","Spend coins, collect badges, protect streaks and unlock cosmetic perks as you level up.":"Dépense tes pièces, collectionne des badges, protège tes séries et débloque des avantages cosmétiques en montant de niveau.","Your AI game master is ready.":"Ton maître du jeu IA est prêt.","Ask Uzio to build a challenge, remix a game, raise the difficulty or surprise you with a quest.":"Demande à Uzio de créer un défi, remixer un jeu, augmenter la difficulté ou te surprendre avec une quête.","Featured mission":"Mission vedette","Neon Vault":"Coffre Néon","Clear 3 rounds, keep your combo alive and crack the final vault. You are 60% through.":"Termine 3 manches, garde ton combo et ouvre le coffre final. Tu as terminé 60 %.","4 min left":"4 min restantes","Continue ▶":"Continuer ▶","Jump in":"Joue maintenant","Every action pushes your profile forward":"Chaque action fait progresser ton profil","Play":"Jouer","Fast rounds, boss modes and score attacks.":"Manches rapides, modes boss et défis de score.","2–5 min":"2–5 min","Open Play":"Ouvrir Jouer","Claim rewards, boosts and collection drops.":"Récupère des récompenses, bonus et objets de collection.","Rewards":"Récompenses","Coins":"Pièces","Open Perks":"Ouvrir Avantages","Watch":"Regarder","Unlock clips, secrets and challenge drops.":"Débloque des clips, secrets et défis.","New drops":"Nouveautés","Open Watch":"Ouvrir Regarder","Let Uzio create your next challenge.":"Laisse Uzio créer ton prochain défi.","AI game master":"Maître du jeu IA","Adaptive":"Adaptatif","Open Uzio AI":"Ouvrir Uzio AI","Uzio challenge drop":"Défi surprise d’Uzio","Want a 90-second boss round?":"Une manche boss de 90 secondes ?","Uzio can remix your recent games into a tougher challenge with bonus XP on the line.":"Uzio peut remixer tes jeux récents en un défi plus difficile avec des XP bonus à gagner.","Generate challenge →":"Créer un défi →","Daily quests":"Quêtes quotidiennes","2 / 3 complete":"2 / 3 terminées","Score Hunter":"Chasseur de scores","Beat one personal best":"Bats un record personnel","Combo Keeper":"Gardien du combo","Reach a 5× combo":"Atteins un combo 5×","Uzio Dare":"Défi Uzio","Complete one AI-generated challenge":"Termine un défi généré par l’IA","Limited-time event":"Événement limité","Double XP Hour":"Heure XP doublée","Complete any three games before the timer expires to unlock a mystery perk.":"Termine trois jeux avant la fin du chrono pour débloquer un avantage mystère.","Enter event →":"Participer →","Game modes":"Modes de jeu","Choose your route or let Uzio randomize it":"Choisis ta route ou laisse Uzio décider au hasard","Rapid Fire":"Tir Rapide","Answer, react and build a combo before time runs out.":"Réponds, réagis et crée un combo avant la fin du temps.","90 sec":"90 s","Score attack":"Défi score","Boss Battle":"Combat de Boss","Survive three stages and defeat the final boss.":"Survis à trois étapes et bats le boss final.","5 min":"5 min","Puzzle Drop":"Défi Puzzle","Solve a chain of clues with fewer hints for more points.":"Résous une chaîne d’indices avec moins d’aide pour gagner plus de points.","3 min":"3 min","Logic":"Logique","Perfect Run":"Parcours Parfait","One mistake resets the multiplier. How far can you go?":"Une erreur remet le multiplicateur à zéro. Jusqu’où iras-tu ?","Hard":"Difficile","Combo":"Combo","Beat Uzio":"Bats Uzio","Race Uzio to the answer and steal the bonus.":"Trouve la réponse avant Uzio et prends le bonus.","2 min":"2 min","AI duel":"Duel IA","Risk It":"Prends le Risque","Choose the safer reward or gamble your points for more.":"Choisis la récompense sûre ou risque tes points pour gagner plus.","High stakes":"Gros enjeu","Quest Run":"Course de Quête","Clear connected mini-games to reach the final chest.":"Termine des mini-jeux liés pour atteindre le coffre final.","6–8 min":"6–8 min","Adventure":"Aventure","Surprise Me":"Surprends-moi","No choosing. Uzio picks the mode, rule and difficulty.":"Pas de choix. Uzio choisit le mode, la règle et la difficulté.","Random":"Aléatoire","Bonus XP":"XP bonus","How top players protect a streak":"Comment les meilleurs joueurs protègent leur série","Strategy Drop · 2:10":"Stratégie · 2:10","Boss Battle: new mode reveal":"Combat de Boss : nouveau mode","Mode Trailer · 1:35":"Bande-annonce · 1:35","3 tricks for a higher combo":"3 astuces pour un meilleur combo","Quick Tip · 2:20":"Astuce rapide · 2:20","Mystery Perks explained":"Les avantages mystère expliqués","Reward Drop · 2:05":"Récompense · 2:05","Inside the new Quest Run map":"Dans la nouvelle carte Course de Quête","Preview · 3:15":"Aperçu · 3:15","Uzio AI creates an impossible challenge":"Uzio AI crée un défi impossible","Uzio Lab · 2:50":"Uzio Lab · 2:50","Watch drops":"Vidéos à découvrir","Some clips unlock quests, boosts or secret game modes":"Certains clips débloquent des quêtes, bonus ou modes secrets","Save for later":"Enregistrer pour plus tard","Player status":"Statut du joueur","660 XP to Level 8":"660 XP avant le niveau 8","Wallet":"Portefeuille","Spend or save":"Dépenser ou économiser","🪙 640 coins":"🪙 640 pièces","Earn coins from quests, high scores, streak milestones and special events.":"Gagne des pièces avec les quêtes, records, séries et événements spéciaux.","🔥 4-day streak":"🔥 Série de 4 jours","🏆 12 badges":"🏆 12 badges","💎 3 rare items":"💎 3 objets rares","Perk shop":"Boutique d’avantages","Boosts and collectibles rotate regularly":"Les bonus et objets de collection changent régulièrement","Streak Shield":"Bouclier de Série","Protect one missed day":"Protège un jour manqué","120 coins":"120 pièces","XP Booster":"Booster XP","Earn 2× XP for 20 minutes":"Gagne 2× XP pendant 20 minutes","180 coins":"180 pièces","Reroll Token":"Jeton de Relance","Swap one daily quest instantly":"Remplace instantanément une quête quotidienne","90 coins":"90 pièces","Rare Drop":"Objet Rare","Unlock a random premium cosmetic":"Débloque un cosmétique premium aléatoire","250 coins":"250 pièces","Combo Saver":"Sauve-Combo","Keep your multiplier after one mistake":"Garde ton multiplicateur après une erreur","160 coins":"160 pièces","Next unlock":"Prochain déblocage","Level 8":"Niveau 8","Mystery Profile Aura":"Aura de Profil Mystère","660 XP to go":"660 XP restants","✨ Cosmetic reward":"✨ Récompense cosmétique","LEVEL":"NIVEAU","Uzio AI · Game Master":"Uzio AI · Maître du Jeu","Tell me how you want to play.":"Dis-moi comment tu veux jouer.","I can invent a challenge, remix a game, set a handicap, create a boss round or build a quest around your current streak.":"Je peux inventer un défi, remixer un jeu, ajouter un handicap, créer une manche boss ou bâtir une quête autour de ta série actuelle.","Adaptive difficulty":"Difficulté adaptative","Fresh rules":"Nouvelles règles","Bonus objectives":"Objectifs bonus","Generate challenge":"Créer un défi","Generate AI challenge":"Créer un défi IA","Quick prompts":"Suggestions rapides","Tap to send to Uzio":"Appuie pour envoyer à Uzio","“Give me a 2-minute challenge with a huge combo bonus.”":"« Donne-moi un défi de 2 minutes avec un énorme bonus de combo. »","“Turn my weakest game into a boss battle.”":"« Transforme mon jeu le plus faible en combat de boss. »","“Surprise me with a risky quest for 200 XP.”":"« Surprends-moi avec une quête risquée à 200 XP. »","“Make a head-to-head challenge I can play with a friend.”":"« Crée un défi face-à-face à jouer avec un ami. »","Live modifier":"Modificateur en direct","Difficulty: Spicy 🌶️":"Difficulté : Épicée 🌶️","Uzio is ready to adjust timers, hints, multipliers and rewards while you play.":"Uzio peut ajuster les chronos, indices, multiplicateurs et récompenses pendant que tu joues.","Fewer hints":"Moins d’indices","Faster timer":"Chrono plus rapide","Uzio can also…":"Uzio peut aussi…","Build the rules around you":"Créer les règles autour de toi","Remix":"Remixer","Combine two game modes into one new challenge.":"Combine deux modes de jeu en un nouveau défi.","AI":"IA","Experimental":"Expérimental","Create a Boss":"Créer un Boss","Generate a multi-stage boss with escalating rules.":"Crée un boss en plusieurs étapes avec des règles de plus en plus difficiles.","Boss":"Boss","Build a Quest":"Créer une Quête","Turn several games into a connected adventure.":"Transforme plusieurs jeux en une aventure liée.","Quest":"Quête","Balance It":"Équilibrer","Tune a challenge so it feels fair but exciting.":"Ajuste un défi pour qu’il soit juste mais excitant.","Smart":"Intelligent"});
+  Object.assign(I18N.de, {"Perks":"Extras","Uzio AI":"Uzio AI","Your game hub: keep your streak alive, chase XP, complete quests and unlock rewards.":"Dein Game-Hub: Halte deine Serie, sammle XP, erfülle Quests und schalte Belohnungen frei.","Pick a game. Chase a new high score.":"Wähle ein Spiel. Jage einen neuen Highscore.","Jump into fast challenges, timed rounds, boss battles and multiplayer-style missions.":"Starte schnelle Challenges, Zeitrunden, Bosskämpfe und Missionen im Mehrspieler-Stil.","Watch. Unlock. Play.":"Ansehen. Freischalten. Spielen.","Catch short clips, trailers and strategy drops that reveal new challenges, boosts and secret rewards.":"Sieh kurze Clips, Trailer und Strategietipps mit neuen Challenges, Boosts und geheimen Belohnungen.","Your rewards. Your status. Your collection.":"Deine Belohnungen. Dein Status. Deine Sammlung.","Spend coins, collect badges, protect streaks and unlock cosmetic perks as you level up.":"Gib Münzen aus, sammle Abzeichen, schütze Serien und schalte beim Leveln kosmetische Extras frei.","Your AI game master is ready.":"Dein KI-Spielleiter ist bereit.","Ask Uzio to build a challenge, remix a game, raise the difficulty or surprise you with a quest.":"Bitte Uzio, eine Challenge zu bauen, ein Spiel zu remixen, die Schwierigkeit zu erhöhen oder dich mit einer Quest zu überraschen.","Featured mission":"Top-Mission","Neon Vault":"Neon-Tresor","Clear 3 rounds, keep your combo alive and crack the final vault. You are 60% through.":"Schaffe 3 Runden, halte deine Kombo und knacke den letzten Tresor. Du bist zu 60 % fertig.","4 min left":"Noch 4 Min.","Continue ▶":"Weiter ▶","Jump in":"Loslegen","Every action pushes your profile forward":"Jede Aktion bringt dein Profil weiter","Play":"Spielen","Fast rounds, boss modes and score attacks.":"Schnelle Runden, Bossmodi und Score-Angriffe.","2–5 min":"2–5 Min.","Open Play":"Spielen öffnen","Claim rewards, boosts and collection drops.":"Hol dir Belohnungen, Boosts und Sammlungs-Drops.","Rewards":"Belohnungen","Coins":"Münzen","Open Perks":"Extras öffnen","Watch":"Ansehen","Unlock clips, secrets and challenge drops.":"Schalte Clips, Geheimnisse und Challenge-Drops frei.","New drops":"Neue Drops","Open Watch":"Ansehen öffnen","Let Uzio create your next challenge.":"Lass Uzio deine nächste Challenge erstellen.","AI game master":"KI-Spielleiter","Adaptive":"Adaptiv","Open Uzio AI":"Uzio AI öffnen","Uzio challenge drop":"Uzio-Challenge-Drop","Want a 90-second boss round?":"Lust auf eine 90-Sekunden-Bossrunde?","Uzio can remix your recent games into a tougher challenge with bonus XP on the line.":"Uzio kann deine letzten Spiele in eine härtere Challenge mit Bonus-XP verwandeln.","Generate challenge →":"Challenge erstellen →","Daily quests":"Tägliche Quests","2 / 3 complete":"2 / 3 erledigt","Score Hunter":"Score-Jäger","Beat one personal best":"Schlage einen persönlichen Rekord","Combo Keeper":"Kombo-Hüter","Reach a 5× combo":"Erreiche eine 5×-Kombo","Uzio Dare":"Uzio-Mutprobe","Complete one AI-generated challenge":"Schließe eine KI-generierte Challenge ab","Limited-time event":"Zeitlich begrenztes Event","Double XP Hour":"Doppelte-XP-Stunde","Complete any three games before the timer expires to unlock a mystery perk.":"Beende drei Spiele vor Ablauf der Zeit, um ein Mystery-Extra freizuschalten.","Enter event →":"Event starten →","Game modes":"Spielmodi","Choose your route or let Uzio randomize it":"Wähle deinen Weg oder lass Uzio zufällig entscheiden","Rapid Fire":"Schnellfeuer","Answer, react and build a combo before time runs out.":"Antworte, reagiere und baue vor Ablauf der Zeit eine Kombo auf.","90 sec":"90 Sek.","Score attack":"Score-Angriff","Boss Battle":"Bosskampf","Survive three stages and defeat the final boss.":"Überstehe drei Phasen und besiege den Endboss.","5 min":"5 Min.","Puzzle Drop":"Puzzle-Drop","Solve a chain of clues with fewer hints for more points.":"Löse eine Hinweiskette mit weniger Hilfen für mehr Punkte.","3 min":"3 Min.","Logic":"Logik","Perfect Run":"Perfekter Lauf","One mistake resets the multiplier. How far can you go?":"Ein Fehler setzt den Multiplikator zurück. Wie weit kommst du?","Hard":"Schwer","Combo":"Kombo","Beat Uzio":"Schlage Uzio","Race Uzio to the answer and steal the bonus.":"Sei schneller als Uzio und schnapp dir den Bonus.","2 min":"2 Min.","AI duel":"KI-Duell","Risk It":"Riskier es","Choose the safer reward or gamble your points for more.":"Wähle die sichere Belohnung oder riskiere Punkte für mehr.","High stakes":"Hohes Risiko","Quest Run":"Quest-Lauf","Clear connected mini-games to reach the final chest.":"Schließe verbundene Minispiele ab und erreiche die letzte Truhe.","6–8 min":"6–8 Min.","Adventure":"Abenteuer","Surprise Me":"Überrasch mich","No choosing. Uzio picks the mode, rule and difficulty.":"Keine Auswahl. Uzio bestimmt Modus, Regel und Schwierigkeit.","Random":"Zufällig","Bonus XP":"Bonus-XP","How top players protect a streak":"Wie Top-Spieler ihre Serie schützen","Strategy Drop · 2:10":"Strategie · 2:10","Boss Battle: new mode reveal":"Bosskampf: Neuer Modus","Mode Trailer · 1:35":"Modus-Trailer · 1:35","3 tricks for a higher combo":"3 Tricks für eine höhere Kombo","Quick Tip · 2:20":"Kurztipp · 2:20","Mystery Perks explained":"Mystery-Extras erklärt","Reward Drop · 2:05":"Belohnungs-Drop · 2:05","Inside the new Quest Run map":"Einblick in die neue Quest-Lauf-Karte","Preview · 3:15":"Vorschau · 3:15","Uzio AI creates an impossible challenge":"Uzio AI erstellt eine unmögliche Challenge","Uzio Lab · 2:50":"Uzio Lab · 2:50","Watch drops":"Video-Drops","Some clips unlock quests, boosts or secret game modes":"Manche Clips schalten Quests, Boosts oder geheime Spielmodi frei","Save for later":"Für später speichern","Player status":"Spielerstatus","660 XP to Level 8":"660 XP bis Level 8","Wallet":"Geldbörse","Spend or save":"Ausgeben oder sparen","🪙 640 coins":"🪙 640 Münzen","Earn coins from quests, high scores, streak milestones and special events.":"Verdiene Münzen durch Quests, Highscores, Serien-Meilensteine und besondere Events.","🔥 4-day streak":"🔥 4-Tage-Serie","🏆 12 badges":"🏆 12 Abzeichen","💎 3 rare items":"💎 3 seltene Items","Perk shop":"Extra-Shop","Boosts and collectibles rotate regularly":"Boosts und Sammlerstücke wechseln regelmäßig","Streak Shield":"Serien-Schild","Protect one missed day":"Schützt einen verpassten Tag","120 coins":"120 Münzen","XP Booster":"XP-Booster","Earn 2× XP for 20 minutes":"20 Minuten lang 2× XP verdienen","180 coins":"180 Münzen","Reroll Token":"Neu-Würfeln-Token","Swap one daily quest instantly":"Tausche sofort eine tägliche Quest","90 coins":"90 Münzen","Rare Drop":"Seltener Drop","Unlock a random premium cosmetic":"Schalte ein zufälliges Premium-Kosmetikobjekt frei","250 coins":"250 Münzen","Combo Saver":"Kombo-Retter","Keep your multiplier after one mistake":"Behalte deinen Multiplikator nach einem Fehler","160 coins":"160 Münzen","Next unlock":"Nächste Freischaltung","Level 8":"Level 8","Mystery Profile Aura":"Mystery-Profil-Aura","660 XP to go":"Noch 660 XP","✨ Cosmetic reward":"✨ Kosmetische Belohnung","LEVEL":"LEVEL","Uzio AI · Game Master":"Uzio AI · Spielleiter","Tell me how you want to play.":"Sag mir, wie du spielen möchtest.","I can invent a challenge, remix a game, set a handicap, create a boss round or build a quest around your current streak.":"Ich kann eine Challenge erfinden, ein Spiel remixen, ein Handicap setzen, eine Bossrunde erstellen oder eine Quest um deine aktuelle Serie bauen.","Adaptive difficulty":"Adaptive Schwierigkeit","Fresh rules":"Neue Regeln","Bonus objectives":"Bonusziele","Generate challenge":"Challenge erstellen","Generate AI challenge":"KI-Challenge erstellen","Quick prompts":"Schnelle Vorschläge","Tap to send to Uzio":"Tippen, um an Uzio zu senden","“Give me a 2-minute challenge with a huge combo bonus.”":"„Gib mir eine 2-Minuten-Challenge mit riesigem Kombo-Bonus.“","“Turn my weakest game into a boss battle.”":"„Mach aus meinem schwächsten Spiel einen Bosskampf.“","“Surprise me with a risky quest for 200 XP.”":"„Überrasch mich mit einer riskanten Quest für 200 XP.“","“Make a head-to-head challenge I can play with a friend.”":"„Erstelle eine direkte Challenge, die ich mit einem Freund spielen kann.“","Live modifier":"Live-Modifikator","Difficulty: Spicy 🌶️":"Schwierigkeit: Scharf 🌶️","Uzio is ready to adjust timers, hints, multipliers and rewards while you play.":"Uzio kann beim Spielen Timer, Hinweise, Multiplikatoren und Belohnungen anpassen.","Fewer hints":"Weniger Hinweise","Faster timer":"Schnellerer Timer","Uzio can also…":"Uzio kann außerdem…","Build the rules around you":"Regeln passend zu dir bauen","Remix":"Remix","Combine two game modes into one new challenge.":"Kombiniere zwei Spielmodi zu einer neuen Challenge.","AI":"KI","Experimental":"Experimentell","Create a Boss":"Boss erstellen","Generate a multi-stage boss with escalating rules.":"Erstelle einen mehrstufigen Boss mit immer schwierigeren Regeln.","Boss":"Boss","Build a Quest":"Quest erstellen","Turn several games into a connected adventure.":"Verwandle mehrere Spiele in ein zusammenhängendes Abenteuer.","Quest":"Quest","Balance It":"Ausbalancieren","Tune a challenge so it feels fair but exciting.":"Passe eine Challenge so an, dass sie fair und spannend ist.","Smart":"Smart"});
 
   var ATTR_I18N = ['aria-label','placeholder','title'];
   function translateString(str) {
@@ -1281,6 +1358,8 @@ h1{margin:18px 0 16px;font-size:clamp(46px,6.8vw,88px);line-height:.96;letter-sp
     var d = I18N[currentLang] || {}, lead = (str.match(/^\s*/) || [''])[0], tail = (str.match(/\s*$/) || [''])[0];
     var core = str.trim();
     if (d[core]) return lead + d[core] + tail;
+    if (core === 'Search') return lead + (currentLang === 'tr' ? 'Ara' : currentLang === 'fr' ? 'Rechercher' : currentLang === 'de' ? 'Suchen' : 'Search') + tail;
+    if (core === 'Language') return lead + (currentLang === 'tr' ? 'Dil' : currentLang === 'fr' ? 'Langue' : currentLang === 'de' ? 'Sprache' : 'Language') + tail;
     var m = core.match(/^Hey (.+) 👋$/);
     if (m) return lead + (currentLang === 'tr' ? 'Merhaba ' : currentLang === 'fr' ? 'Salut ' : 'Hallo ') + m[1] + ' 👋' + tail;
     m = core.match(/^Nice to meet you, (.+)!$/);
@@ -1324,11 +1403,11 @@ h1{margin:18px 0 16px;font-size:clamp(46px,6.8vw,88px);line-height:.96;letter-sp
   }
 
   function setLangMenu(open) {
-    langBox.classList.toggle('open', open);
-    langBtn.setAttribute('aria-expanded', String(open));
-    langMenu.inert = !open;
+    if (!langMenu || !menuLangBtn) return;
+    langMenu.hidden = !open;
+    menuLangBtn.setAttribute('aria-expanded', String(open));
   }
-  langBtn.addEventListener('click', function () { setMenu(false); setLangMenu(!langBox.classList.contains('open')); });
+  if (menuLangBtn) menuLangBtn.addEventListener('click', function () { setLangMenu(langMenu.hidden); });
   langMenu.addEventListener('click', function (e) {
     var b = e.target.closest('[data-lang]'); if (!b) return;
     currentLang = b.getAttribute('data-lang');
@@ -1338,7 +1417,36 @@ h1{margin:18px 0 16px;font-size:clamp(46px,6.8vw,88px);line-height:.96;letter-sp
     renderPanel(curView, true);
     applyLanguage(document);
     if (onb && onb.classList.contains('show')) { onbRender(); applyLanguage(onb); }
+    var vv = views[curView] || views.home;
+    $('eyebrow').textContent = translateString(vv.e); $('title').textContent = translateString(vv.t); $('blurb').textContent = translateString(vv.p);
+    document.title = vv.e === 'Home' ? 'Uzio' : translateString(vv.e) + ' · Uzio';
   });
+
+
+  /* ---------- Search pill ---------- */
+  var searchPill = $('searchPill'), searchBtn = $('searchBtn'), searchInput = $('searchInput');
+  function runSearch() {
+    var q = (searchInput.value || '').trim().toLocaleLowerCase();
+    if (!q) { searchInput.focus(); return; }
+    document.querySelectorAll('.search-hit').forEach(function (el) { el.classList.remove('search-hit'); });
+    var rootPanel = $('panel');
+    var candidates = rootPanel ? rootPanel.querySelectorAll('.card, .tile, .row, .badge, .vitem, .group, [data-search]') : [];
+    var hit = null;
+    Array.prototype.some.call(candidates, function (el) {
+      var txt = (el.innerText || el.textContent || '').toLocaleLowerCase();
+      if (txt.indexOf(q) !== -1) { hit = el; return true; }
+      return false;
+    });
+    if (hit) {
+      hit.classList.add('search-hit');
+      hit.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+      setTimeout(function () { hit.classList.remove('search-hit'); }, 1100);
+    } else {
+      toast(currentLang === 'tr' ? 'Sonuç bulunamadı' : currentLang === 'fr' ? 'Aucun résultat' : currentLang === 'de' ? 'Kein Ergebnis gefunden' : 'No results found');
+    }
+  }
+  searchBtn.addEventListener('click', function () { searchInput.focus(); if (searchInput.value.trim()) runSearch(); });
+  searchInput.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); runSearch(); } });
 
     /* ---------- Account menu ---------- */
   var acct = $('acct'), acctBtn = $('acctBtn'), menu = $('menu');
@@ -1348,7 +1456,7 @@ h1{margin:18px 0 16px;font-size:clamp(46px,6.8vw,88px);line-height:.96;letter-sp
     menu.inert = !open;
   }
   acctBtn.addEventListener('click', function () { setMenu(!acct.classList.contains('open')); });
-  document.addEventListener('pointerdown', function (e) { if (!acct.contains(e.target)) setMenu(false); if (!langBox.contains(e.target)) setLangMenu(false); });
+  document.addEventListener('pointerdown', function (e) { if (!acct.contains(e.target)) { setMenu(false); setLangMenu(false); } });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { setMenu(false); setLangMenu(false); } });
   menu.querySelectorAll('[data-menu]').forEach(function (b) {
     b.addEventListener('click', function () { setMenu(false); toast(b.getAttribute('data-menu') + ' · coming soon'); });
@@ -1462,13 +1570,13 @@ h1{margin:18px 0 16px;font-size:clamp(46px,6.8vw,88px);line-height:.96;letter-sp
 
   /* ---------- Navigation stays fixed in the top bar ---------- */
 
-  /* ---------- Views ---------- */
+  /* ---------- Views: gamification only ---------- */
   var views = {
-    'home':     { c: '#1ea7ff',   e: 'Home',     t: 'Hey Uzay 👋', p: 'Ready for some English? Pick something fun, continue your quest, or ask Uzio for a challenge.' },
-    'play':     { c: '#ff2d75',   e: 'Play',     t: 'Choose a game. Beat your best.', p: 'Fast English games for vocabulary, grammar, reading, listening and English IRL.' },
-    'practise': { c: '#b8ff1f', ink: '#4d6b00', e: 'Practise', t: 'Train one skill at a time', p: 'Choose what you want to improve. Uzio can make each activity easier, harder or completely new.' },
-    'watch':    { c: '#b44dff', e: 'Watch',    t: 'Watch it. Catch it. Use it.', p: 'Short English videos with a tiny challenge after each one, so watching becomes practice.' },
-    'my-quest': { c: '#ffa11a', e: 'My Quest', t: 'See how far you have come', p: 'Build streaks, collect skill badges and level up by actually using English.' }
+    'home':    { c: '#1ea7ff', e: 'Home',    t: 'Hey Uzay 👋', p: 'Your game hub: keep your streak alive, chase XP, complete quests and unlock rewards.' },
+    'play':    { c: '#ff2d75', e: 'Play',    t: 'Pick a game. Chase a new high score.', p: 'Jump into fast challenges, timed rounds, boss battles and multiplayer-style missions.' },
+    'watch':   { c: '#b44dff', e: 'Watch',   t: 'Watch. Unlock. Play.', p: 'Catch short clips, trailers and strategy drops that reveal new challenges, boosts and secret rewards.' },
+    'perks':   { c: '#b8ff1f', ink: '#4d6b00', e: 'Perks', t: 'Your rewards. Your status. Your collection.', p: 'Spend coins, collect badges, protect streaks and unlock cosmetic perks as you level up.' },
+    'uzio-ai': { c: '#ffa11a', e: 'Uzio AI', t: 'Your AI game master is ready.', p: 'Ask Uzio to build a challenge, remix a game, raise the difficulty or surprise you with a quest.' }
   };
   var viewEl = $('view'), panel = $('panel'), curView = 'home', swapToken = 0;
 
@@ -1484,69 +1592,50 @@ h1{margin:18px 0 16px;font-size:clamp(46px,6.8vw,88px);line-height:.96;letter-sp
   /* ---------- Panels ---------- */
   function rHome() {
     return '<div class="dash">' +
-      '<section class="card hero s12"><div><div class="kicker">Continue where you left off</div><div class="hero-title">Word Detective</div><p class="sub">Find the mystery word from clues. You are 60% through.</p>' + bar(60) + '<div class="chips">' + chip('4 min left', '#fff') + chip('+35 XP', '#fff') + '</div></div><button class="btn white" type="button" data-act="demo" data-v="Continue Word Detective" style="--c:var(--blue)">Continue ▶</button></section>' +
-      '<div class="sec s12">Jump in</div>' +
+      '<section class="card hero s12"><div><div class="kicker">Featured mission</div><div class="hero-title">Neon Vault</div><p class="sub">Clear 3 rounds, keep your combo alive and crack the final vault. You are 60% through.</p>' + bar(60) + '<div class="chips">' + chip('4 min left', '#fff') + chip('+120 XP', '#fff') + chip('2× combo', '#fff') + '</div></div><button class="btn white" type="button" data-act="demo" data-v="Continue Neon Vault" style="--c:var(--blue)">Continue ▶</button></section>' +
+      '<div class="sec s12">Jump in <small>Every action pushes your profile forward</small></div>' +
       '<div class="s12 tiles">' +
-        tile('🎮', 'Play', 'Fast games. Instant feedback.', '2–5 min', '+ XP', 'var(--pink)', 'Open Play') +
-        tile('🎤', 'Speak', 'Talk, role-play and build confidence.', 'AI', 'Speaking', 'var(--teal)', 'Speak with Uzio') +
-        tile('🧠', 'Challenge me', 'Let Uzio choose your next task.', 'Adaptive', '2–4 min', 'var(--orange)', 'Challenge me') +
-        tile('🎬', 'Watch', 'Short video. Tiny challenge after.', '3–7 min', 'English IRL', 'var(--purple)', 'Open Watch') +
+        tile('🎮', 'Play', 'Fast rounds, boss modes and score attacks.', '2–5 min', '+ XP', 'var(--pink)', 'Open Play') +
+        tile('🎁', 'Perks', 'Claim rewards, boosts and collection drops.', 'Rewards', 'Coins', 'var(--green)', 'Open Perks') +
+        tile('🎬', 'Watch', 'Unlock clips, secrets and challenge drops.', 'New drops', '+ bonus', 'var(--purple)', 'Open Watch') +
+        tile('✨', 'Uzio AI', 'Let Uzio create your next challenge.', 'AI game master', 'Adaptive', 'var(--orange)', 'Open Uzio AI') +
       '</div>' +
-      '<section class="card s7 uzio-pick"><div class="uzio-mini"><span>U</span></div><div class="info"><div class="kicker">Uzio picked this for you</div><b>Can you beat my vocabulary challenge?</b>' + pickLine() + '<button class="btn" type="button" data-act="demo" data-v="Uzio vocabulary challenge" style="--c:var(--green)">Try it →</button></div></section>' +
-      '<section class="card s5"><h2>Today\'s quest <span class="hint">+50 XP</span></h2>' + bar(67, 'var(--pink)') + '<div class="group" style="margin-top:16px;box-shadow:none;background:var(--fill)">' +
-        '<div class="row"><span class="check">✓</span><div class="info"><b>Learn</b><small>5 new words</small></div></div>' +
-        '<div class="row"><span class="check">✓</span><div class="info"><b>Play</b><small>1 quick game</small></div></div>' +
-        '<div class="row"><span class="check todo">○</span><div class="info"><b>Speak</b><small>1 minute with Uzio</small></div></div></div></section>' +
-      '<section class="card quote s12"><div><div class="kicker">English IRL · expression of the day</div><blockquote>“My lips are sealed.”</blockquote><p class="sub">Can you guess what it means before Uzio tells you?</p></div><button class="btn" type="button" data-act="demo" data-v="English IRL: My lips are sealed" style="--c:var(--purple)">Find out →</button></section>' +
+      '<section class="card s7 uzio-pick"><div class="uzio-mini"><span>U</span></div><div class="info"><div class="kicker">Uzio challenge drop</div><b>Want a 90-second boss round?</b><p class="sub">Uzio can remix your recent games into a tougher challenge with bonus XP on the line.</p><button class="btn" type="button" data-act="open-uzio" style="--c:var(--green)">Generate challenge →</button></div></section>' +
+      '<section class="card s5"><h2>Daily quests <span class="hint">2 / 3 complete</span></h2>' + bar(67, 'var(--pink)') + '<div class="group" style="margin-top:16px;box-shadow:none;background:var(--fill)">' +
+        '<div class="row"><span class="check">✓</span><div class="info"><b>Score Hunter</b><small>Beat one personal best</small></div></div>' +
+        '<div class="row"><span class="check">✓</span><div class="info"><b>Combo Keeper</b><small>Reach a 5× combo</small></div></div>' +
+        '<div class="row"><span class="check todo">○</span><div class="info"><b>Uzio Dare</b><small>Complete one AI-generated challenge</small></div></div></div></section>' +
+      '<section class="card quote s12"><div><div class="kicker">Limited-time event</div><blockquote>Double XP Hour</blockquote><p class="sub">Complete any three games before the timer expires to unlock a mystery perk.</p></div><button class="btn" type="button" data-act="demo" data-v="Double XP event" style="--c:var(--purple)">Enter event →</button></section>' +
       '</div>';
   }
 
   function rPlay() {
-    return '<div class="dash"><div class="sec s12">Quick Play <small>Or let Uzio surprise you</small></div><div class="s12 tiles">' +
-      tile('⚡', 'Word Rush', 'Choose the right word before time runs out.', '2 min', 'Vocabulary', 'var(--blue)', 'Word Rush') +
-      tile('🕵️', 'Grammar Rescue', 'Spot the mistake and fix the sentence.', '3 min', 'Grammar', 'var(--orange)', 'Grammar Rescue') +
-      tile('🔎', 'Clue Hunter', 'Read closely and solve the mystery.', '4 min', 'Reading', 'var(--purple)', 'Clue Hunter') +
-      tile('🎧', 'Sound Detective', 'Listen, notice and choose what you heard.', '3 min', 'Listening', 'var(--green)', 'Sound Detective') +
-      tile('💬', 'English IRL', 'Match real expressions to real situations.', '3 min', 'Real English', 'var(--pink)', 'English IRL') +
-      tile('🏁', 'Beat Uzio', 'Answer before Uzio does.', '2 min', 'AI Challenge', 'var(--teal)', 'Beat Uzio') +
-      tile('🧩', 'Sentence Builder', 'Put the pieces in the best order.', '3 min', 'Grammar', 'var(--indigo)', 'Sentence Builder') +
-      tile('🎲', 'Surprise Me', 'No choosing. Uzio picks your game.', '2–4 min', 'Any skill', 'var(--orange)', 'Surprise Me') +
+    return '<div class="dash"><div class="sec s12">Game modes <small>Choose your route or let Uzio randomize it</small></div><div class="s12 tiles">' +
+      tile('⚡', 'Rapid Fire', 'Answer, react and build a combo before time runs out.', '90 sec', 'Score attack', 'var(--blue)', 'Rapid Fire') +
+      tile('👾', 'Boss Battle', 'Survive three stages and defeat the final boss.', '5 min', '+180 XP', 'var(--orange)', 'Boss Battle') +
+      tile('🧩', 'Puzzle Drop', 'Solve a chain of clues with fewer hints for more points.', '3 min', 'Logic', 'var(--purple)', 'Puzzle Drop') +
+      tile('🎯', 'Perfect Run', 'One mistake resets the multiplier. How far can you go?', 'Hard', 'Combo', 'var(--green)', 'Perfect Run') +
+      tile('🏁', 'Beat Uzio', 'Race Uzio to the answer and steal the bonus.', '2 min', 'AI duel', 'var(--teal)', 'Beat Uzio') +
+      tile('💥', 'Risk It', 'Choose the safer reward or gamble your points for more.', 'High stakes', 'Coins', 'var(--pink)', 'Risk It') +
+      tile('🗺️', 'Quest Run', 'Clear connected mini-games to reach the final chest.', '6–8 min', 'Adventure', 'var(--indigo)', 'Quest Run') +
+      tile('🎲', 'Surprise Me', 'No choosing. Uzio picks the mode, rule and difficulty.', 'Random', 'Bonus XP', 'var(--orange)', 'Surprise Me') +
       '</div></div>';
-  }
-
-  function rPractise() {
-    var skills = [
-      ['🔤', 'Vocabulary', 'Build useful words and use them in context.', 'var(--blue)'],
-      ['🧩', 'Grammar', 'Notice patterns, fix errors and make sentences.', 'var(--orange)'],
-      ['🎤', 'Speaking', 'Role-play, answer and keep a conversation going.', 'var(--pink)'],
-      ['📖', 'Reading', 'Find ideas, clues and details without over-translating.', 'var(--purple)'],
-      ['🎧', 'Listening', 'Catch key words, meaning and natural expressions.', 'var(--green)']
-    ];
-    var rows = skills.map(function (x) {
-      return '<div class="row" style="--c:' + x[3] + '"><span class="app-icon">' + x[0] + '</span><div class="info"><b>' + x[1] + '</b><small>' + x[2] + '</small></div><button class="btn soft" type="button" data-act="demo" data-v="Practise ' + x[1] + '">Practise</button></div>';
-    }).join('');
-    return '<div class="dash">' +
-      '<div class="sec s12">Choose a skill <small>Uzio adjusts the level as you go</small></div>' +
-      '<div class="s12 group">' + rows + '</div>' +
-      '<section class="card s7" style="color:#fff;background:linear-gradient(135deg,color-mix(in srgb,var(--green) 85%,#fff),var(--teal));box-shadow:0 22px 48px color-mix(in srgb,var(--green) 34%,transparent)"><div class="kicker" style="color:rgba(255,255,255,.8)">Recommended for you</div><div class="big" style="font-size:32px">Past Simple: tell the story</div><p class="sub" style="color:rgba(255,255,255,.85)">You know the forms. Now practise using them in a short story instead of another worksheet.</p><div class="chips">' + chip('4 min', '#fff') + chip('Speaking + grammar', '#fff') + chip('+40 XP', '#fff') + '</div><button class="btn white" type="button" data-act="demo" data-v="Past Simple story challenge" style="--c:var(--green)">Start challenge</button></section>' +
-      '<section class="card s5"><h2>Make it yours</h2><p class="sub" style="margin:-6px 0 14px">Tell Uzio what you want to practise.</p><div class="suggest"><button type="button" data-act="open-uzio">“Quiz me on food words.”</button><button type="button" data-act="open-uzio">“Give me a harder reading.”</button><button type="button" data-act="open-uzio">“Let’s practise ordering at a restaurant.”</button></div></section>' +
-      '</div>';
   }
 
   function rWatch() {
     var vids = [
-      [1, '💬', 'My lips are sealed', 'English IRL · 2:10', 'var(--pink)'],
-      [2, '🎤', '3 ways to say “I don’t know” naturally', 'Speaking · 3:05', 'var(--teal)'],
-      [3, '🧠', 'Stop saying “very good” every time', 'Vocabulary · 3:40', 'var(--blue)'],
-      [4, '🎧', 'Can you hear the difference?', 'Listening · 2:55', 'var(--green)'],
-      [5, '📚', 'Find the main idea fast', 'Reading · 4:15', 'var(--purple)'],
-      [6, '🧩', 'Past Simple in a real story', 'Grammar · 4:50', 'var(--orange)']
+      [1, '🏆', 'How top players protect a streak', 'Strategy Drop · 2:10', 'var(--pink)'],
+      [2, '👾', 'Boss Battle: new mode reveal', 'Mode Trailer · 1:35', 'var(--teal)'],
+      [3, '⚡', '3 tricks for a higher combo', 'Quick Tip · 2:20', 'var(--blue)'],
+      [4, '🎁', 'Mystery Perks explained', 'Reward Drop · 2:05', 'var(--green)'],
+      [5, '🗺️', 'Inside the new Quest Run map', 'Preview · 3:15', 'var(--purple)'],
+      [6, '🤖', 'Uzio AI creates an impossible challenge', 'Uzio Lab · 2:50', 'var(--orange)']
     ];
     var grid = vids.map(function (v, i) {
       var on = !!ST.saved[v[0]];
       return '<article style="--c:' + v[4] + '"><button class="thumb" type="button" data-act="demo" data-v="Watch: ' + v[2] + '" aria-label="Play ' + v[2] + '"><span class="emo">' + v[1] + '</span><span class="play">▶</span>' + (i < 2 ? '<span class="new">NEW</span>' : '') + '</button><div class="vmeta"><div><h3>' + v[2] + '</h3><span class="sub">' + v[3] + '</span></div><button class="star' + (on ? ' on' : '') + '" type="button" data-act="save" data-id="' + v[0] + '" aria-pressed="' + on + '" aria-label="Save for later">' + (on ? '★' : '☆') + '</button></div></article>';
     }).join('');
-    return '<div class="dash"><div class="sec s12">Watch &amp; Try <small>Every video ends with one tiny challenge</small></div><div class="s12 vgrid">' + grid + '</div></div>';
+    return '<div class="dash"><div class="sec s12">Watch drops <small>Some clips unlock quests, boosts or secret game modes</small></div><div class="s12 vgrid">' + grid + '</div></div>';
   }
 
   function ringSvg(pct) {
@@ -1554,32 +1643,41 @@ h1{margin:18px 0 16px;font-size:clamp(46px,6.8vw,88px);line-height:.96;letter-sp
     return '<div class="ring"><svg viewBox="0 0 132 132"><defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--orange)"/><stop offset="1" stop-color="var(--pink)"/></linearGradient></defs><circle class="tr" cx="66" cy="66" r="52"/><circle class="pr" cx="66" cy="66" r="52" stroke="url(#rg)" stroke-dasharray="' + C.toFixed(1) + '" stroke-dashoffset="' + C.toFixed(1) + '" data-off="' + off.toFixed(1) + '"/></svg><div class="mid"><b>7</b><span>LEVEL</span></div></div>';
   }
 
-  function rQuest() {
-    var di = (new Date().getDay() + 6) % 7, L = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
-    var week = L.map(function (l, i) {
-      var cls = i === di ? 'today' : (i < di && di - i <= 4 ? 'done' : '');
-      return '<div class="day ' + cls + '"><i>' + (cls === 'done' ? '🔥' : '') + '</i>' + l + '</div>';
-    }).join('');
-    var sb = [
-      ['🔤', 'Word Wizard', 'Learn and use 50 words', 'var(--blue)'],
-      ['🎤', 'Brave Speaker', 'Complete 5 speaking challenges', 'var(--pink)'],
-      ['🕵️', 'Grammar Detective', 'Fix 20 sentence mistakes', 'var(--orange)'],
-      ['📚', 'Book Explorer', 'Finish 5 reading challenges', 'var(--purple)'],
-      ['💬', 'Idiom Hunter', 'Learn 10 English IRL expressions', 'var(--teal)']
+  function rPerks() {
+    var perks = [
+      ['🛡️', 'Streak Shield', 'Protect one missed day', 'var(--blue)', '120 coins'],
+      ['⚡', 'XP Booster', 'Earn 2× XP for 20 minutes', 'var(--orange)', '180 coins'],
+      ['🎲', 'Reroll Token', 'Swap one daily quest instantly', 'var(--purple)', '90 coins'],
+      ['💎', 'Rare Drop', 'Unlock a random premium cosmetic', 'var(--teal)', '250 coins'],
+      ['🔥', 'Combo Saver', 'Keep your multiplier after one mistake', 'var(--pink)', '160 coins']
     ];
-    var badges = sb.map(function (b, i) {
-      return '<div class="badge' + (i > 2 ? ' lock' : '') + '" style="--c:' + b[3] + '"><div class="coin">' + b[0] + '</div><b>' + b[1] + '</b><small>' + b[2] + '</small>' + (i < 3 ? chip('Earned ✓', 'var(--green)') : chip(i === 3 ? '3 of 5' : '6 of 10', 'var(--fg2)')) + '</div>';
+    var cards = perks.map(function (b, i) {
+      return '<div class="badge perk-item" style="--c:' + b[3] + '"><div class="coin">' + b[0] + '</div><b>' + b[1] + '</b><small>' + b[2] + '</small>' + chip(b[4], b[3]) + '</div>';
     }).join('');
     return '<div class="dash">' +
-      '<section class="card s5 lvl">' + ringSvg(78) + '<div class="info"><div class="kicker">Explorer</div><div class="big">2,340 XP</div><p class="sub">660 XP to Level 8</p></div></section>' +
-      '<section class="card s7"><h2>🔥 4-day streak <span class="hint">Small practice counts</span></h2><div class="week">' + week + '</div><p class="sub">You used English 4 days in a row. Come back tomorrow to make it 5.</p></section>' +
-      '<div class="sec s12">Skill badges <small>Earn them by using English</small></div>' +
-      '<section class="s12 badges">' + badges + '</section>' +
-      '<section class="card s12"><h2>Our class quest <span class="hint">Everyone contributes</span></h2><p class="q">7,840 / 10,000 XP</p>' + bar(78.4, 'var(--green)') + '<div class="chips">' + chip('2,160 XP to go', 'var(--green)') + chip('🎵 Reward: choose the class playlist', 'var(--pink)') + '</div></section>' +
+      '<section class="card s5 lvl">' + ringSvg(78) + '<div class="info"><div class="kicker">Player status</div><div class="big">2,340 XP</div><p class="sub">660 XP to Level 8</p></div></section>' +
+      '<section class="card s7"><h2>Wallet <span class="hint">Spend or save</span></h2><div class="big">🪙 640 coins</div><p class="sub">Earn coins from quests, high scores, streak milestones and special events.</p><div class="chips">' + chip('🔥 4-day streak', 'var(--pink)') + chip('🏆 12 badges', 'var(--orange)') + chip('💎 3 rare items', 'var(--purple)') + '</div></section>' +
+      '<div class="sec s12">Perk shop <small>Boosts and collectibles rotate regularly</small></div>' +
+      '<section class="s12 badges">' + cards + '</section>' +
+      '<section class="card s12"><h2>Next unlock <span class="hint">Level 8</span></h2><p class="q">Mystery Profile Aura</p>' + bar(78, 'var(--green)') + '<div class="chips">' + chip('660 XP to go', 'var(--green)') + chip('✨ Cosmetic reward', 'var(--purple)') + '</div></section>' +
       '</div>';
   }
 
-  var RENDER = { 'home': rHome, 'play': rPlay, 'practise': rPractise, 'watch': rWatch, 'my-quest': rQuest };
+  function rUzioAI() {
+    return '<div class="dash">' +
+      '<section class="card hero s12"><div><div class="kicker">Uzio AI · Game Master</div><div class="hero-title">Tell me how you want to play.</div><p class="sub">I can invent a challenge, remix a game, set a handicap, create a boss round or build a quest around your current streak.</p><div class="chips">' + chip('Adaptive difficulty', '#fff') + chip('Fresh rules', '#fff') + chip('Bonus objectives', '#fff') + '</div></div><button class="btn white" type="button" data-act="demo" data-v="Generate AI challenge" style="--c:var(--orange)">Generate challenge</button></section>' +
+      '<section class="card s7"><h2>Quick prompts <span class="hint">Tap to send to Uzio</span></h2><div class="suggest"><button type="button" data-act="open-uzio">“Give me a 2-minute challenge with a huge combo bonus.”</button><button type="button" data-act="open-uzio">“Turn my weakest game into a boss battle.”</button><button type="button" data-act="open-uzio">“Surprise me with a risky quest for 200 XP.”</button><button type="button" data-act="open-uzio">“Make a head-to-head challenge I can play with a friend.”</button></div></section>' +
+      '<section class="card s5"><div class="uzio-pick"><div class="uzio-mini"><span>U</span></div><div><div class="kicker">Live modifier</div><b>Difficulty: Spicy 🌶️</b><p class="sub">Uzio is ready to adjust timers, hints, multipliers and rewards while you play.</p></div></div><div class="chips">' + chip('+25% XP', 'var(--orange)') + chip('Fewer hints', 'var(--pink)') + chip('Faster timer', 'var(--purple)') + '</div></section>' +
+      '<div class="sec s12">Uzio can also… <small>Build the rules around you</small></div>' +
+      '<div class="s12 tiles">' +
+        tile('🧪', 'Remix', 'Combine two game modes into one new challenge.', 'AI', 'Experimental', 'var(--teal)', 'Uzio Remix') +
+        tile('👾', 'Create a Boss', 'Generate a multi-stage boss with escalating rules.', 'Boss', '+ XP', 'var(--orange)', 'Create Boss') +
+        tile('🗺️', 'Build a Quest', 'Turn several games into a connected adventure.', 'Quest', 'Rewards', 'var(--purple)', 'Build Quest') +
+        tile('⚖️', 'Balance It', 'Tune a challenge so it feels fair but exciting.', 'Adaptive', 'Smart', 'var(--green)', 'Balance It') +
+      '</div></div>';
+  }
+
+  var RENDER = { 'home': rHome, 'play': rPlay, 'watch': rWatch, 'perks': rPerks, 'uzio-ai': rUzioAI };
 
   function renderPanel(id, quiet) {
     curView = id;
@@ -1598,7 +1696,7 @@ h1{margin:18px 0 16px;font-size:clamp(46px,6.8vw,88px);line-height:.96;letter-sp
       if (token !== swapToken) return;
       panel.style.minHeight = '';
       renderPanel(id);
-      $('eyebrow').textContent = v.e; $('title').textContent = v.t; $('blurb').textContent = v.p;
+      $('eyebrow').textContent = translateString(v.e); $('title').textContent = translateString(v.t); $('blurb').textContent = translateString(v.p);
       viewEl.classList.remove('swap'); void viewEl.offsetWidth; viewEl.classList.add('swap');
       panel.classList.remove('is-out'); viewEl.classList.remove('is-out');
     };
@@ -1619,7 +1717,7 @@ h1{margin:18px 0 16px;font-size:clamp(46px,6.8vw,88px);line-height:.96;letter-sp
     if (v.ink) root.style.setProperty('--accent-ink', v.ink); else root.style.removeProperty('--accent-ink');
     moveDrop(activeTab);
     swapContent(id, v);
-    document.title = v.e === 'Home' ? 'Uzio English' : translateString(v.e) + ' · Uzio English';
+    document.title = v.e === 'Home' ? 'Uzio' : translateString(v.e) + ' · Uzio';
   }
 
   /* ---------- Interactions ---------- */
@@ -1637,7 +1735,7 @@ h1{margin:18px 0 16px;font-size:clamp(46px,6.8vw,88px);line-height:.96;letter-sp
     if (!b) return;
     var act = b.getAttribute('data-act'), v = b.getAttribute('data-v'), id = +b.getAttribute('data-id');
     if (act === 'demo') { toast('✨ ' + v + ' · activity ready to connect'); return; }
-    if (act === 'open-uzio') { location.href = 'uzio_room.html'; return; }
+    if (act === 'open-uzio') { location.hash = 'uzio-ai'; return; }
     if (act === 'save') {
       if (ST.saved[id]) delete ST.saved[id]; else ST.saved[id] = true;
       renderPanel(curView, true);
@@ -1646,11 +1744,11 @@ h1{margin:18px 0 16px;font-size:clamp(46px,6.8vw,88px);line-height:.96;letter-sp
 
   /* ---------- Profile + onboarding ---------- */
   var LEVELS = [
-    { id: 'start', e: '🌱', t: 'Just starting', s: 'I know some words and short sentences.', fit: 'easy and friendly' },
-    { id: 'grow',  e: '🚀', t: 'Getting there', s: 'I can talk about everyday things.', fit: 'a good stretch' },
-    { id: 'conf',  e: '🏆', t: 'Pretty confident', s: 'I want to sound more natural.', fit: 'a little tricky' }
+    { id: 'start', e: '🌱', t: 'Casual', s: 'I like quick, easy-to-enter challenges.', fit: 'quick and friendly' },
+    { id: 'grow',  e: '🚀', t: 'Competitive', s: 'I like chasing scores, streaks and harder goals.', fit: 'a good stretch' },
+    { id: 'conf',  e: '🏆', t: 'Hardcore', s: 'Give me tough rules, high stakes and rare rewards.', fit: 'seriously challenging' }
   ];
-  var INTERESTS = [['🎮', 'Games'], ['🎵', 'Music'], ['⚽', 'Sports'], ['🐾', 'Animals'], ['🚀', 'Space'], ['🍕', 'Food'], ['🎬', 'Movies'], ['💻', 'Technology'], ['🎨', 'Art']];
+  var INTERESTS = [['⚡', 'Speed'], ['🧩', 'Puzzles'], ['🏁', 'Competition'], ['👾', 'Bosses'], ['🗺️', 'Quests'], ['🎁', 'Rewards'], ['🔥', 'Streaks'], ['🤖', 'AI'], ['🎯', 'High Scores']];
   var PKEY = 'uzio-profile';
   var P = { name: 'Uzay', level: '', interests: [] };
   var seen = false, hasProfile = false;
@@ -1703,7 +1801,7 @@ h1{margin:18px 0 16px;font-size:clamp(46px,6.8vw,88px);line-height:.96;letter-sp
       h = '<h2 class="onb-title" id="onbTitle">Hi! I\'m Uzio.</h2><p class="onb-sub">I\'ll help you practise English. What should I call you?</p>' +
         '<input class="onb-input" id="onbName" type="text" maxlength="20" autocomplete="off" autocapitalize="words" spellcheck="false" placeholder="Your name" aria-label="Your name" value="' + esc(draft.name) + '">';
     } else if (s === 1) {
-      h = '<h2 class="onb-title" id="onbTitle">Nice to meet you, ' + nm + '!</h2><p class="onb-sub">How do you feel about English?</p><div class="onb-choices" role="group" aria-label="English level">' +
+      h = '<h2 class="onb-title" id="onbTitle">Nice to meet you, ' + nm + '!</h2><p class="onb-sub">How do you like to play?</p><div class="onb-choices" role="group" aria-label="Play style">' +
         LEVELS.map(function (l) {
           return '<button class="opt" type="button" data-level="' + l.id + '" aria-pressed="' + (draft.level === l.id) + '"><span class="e">' + l.e + '</span><span><b>' + l.t + '</b><small>' + l.s + '</small></span></button>';
         }).join('') + '</div>';
@@ -1713,7 +1811,7 @@ h1{margin:18px 0 16px;font-size:clamp(46px,6.8vw,88px);line-height:.96;letter-sp
           return '<button class="pick" type="button" data-int="' + i[1] + '" aria-pressed="' + (draft.interests.indexOf(i[1]) > -1) + '">' + i[0] + ' ' + i[1] + '</button>';
         }).join('') + '</div>';
     } else {
-      h = '<h2 class="onb-title" id="onbTitle">All set, ' + nm + '! 🎉</h2><p class="onb-sub">Your home page is ready. You can redo this any time from the menu.</p>';
+      h = '<h2 class="onb-title" id="onbTitle">All set, ' + nm + '! 🎉</h2><p class="onb-sub">Your game hub is ready. You can redo this any time from the menu.</p>';
     }
     onbBody.innerHTML = '<div class="onb-step">' + h + '</div>';
     applyLanguage(onbBody);
@@ -2037,7 +2135,7 @@ h1{margin:18px 0 16px;font-size:clamp(46px,6.8vw,88px);line-height:.96;letter-sp
       } },
       sleepy: { d: 3200, f: function (ph, o) { var s = sin(PI * ph); o.blink = 1 - .88 * s * s; o.gyo = -.45 * s; o.rot = 4 * sin(ph * PI * 2) * s; } }
     };
-    var BORED = ['wiggle', 'yawn', 'look', 'bounce', 'sleepy', 'laugh', 'laugh', 'tipover', 'hat', 'hat', 'hat'];
+    var BORED = ['wiggle', 'yawn', 'look', 'bounce', 'sleepy', 'laugh', 'laugh', 'tipover'];
     var mv = null, lastBored = '';
     var nextSpin = last + 10000 + Math.random() * 6000, nextBored = last + 5000;
     function start(name, now) {
