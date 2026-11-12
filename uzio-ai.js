@@ -752,6 +752,15 @@
     var pt = docEl.clientHeight - parseFloat(cs.bottom) - panel.offsetHeight;
     return { left: pl + s.offsetLeft, top: pt + s.offsetTop, width: s.offsetWidth, height: s.offsetHeight };
   }
+  /* game hub only: line the panel's bottom-right corner up with the orb's own box */
+  function anchorPanel() {
+    if (!isHub || !panel) return;
+    var link = doc.querySelector('.uzio-orb'), r = link && link.getBoundingClientRect();
+    if (!r || !r.width) return;
+    panel.style.setProperty('--uai-r', Math.max(0, docEl.clientWidth - r.right) + 'px');
+    panel.style.setProperty('--uai-b', Math.max(0, docEl.clientHeight - r.bottom) + 'px');
+  }
+  win.addEventListener('resize', function () { if (state.open) anchorPanel(); });
   function landOrb() {
     if (!fly) return;
     var f = fly; fly = null;
@@ -796,6 +805,7 @@
     if (on) {
       returnFocus = doc.activeElement;
       applyLang(); start();
+      anchorPanel();
       moveOrb(true);
       if (prompt) ask(prompt);
       setTimeout(function () { try { input.focus({ preventScroll: true }); } catch (e) {} }, reduce ? 0 : 160);
