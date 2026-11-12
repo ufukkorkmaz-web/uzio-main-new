@@ -742,6 +742,50 @@
     say(g, lang, true);
   }
 
+  /* ---------- the real Uzio orb moves between the page and the chat header ---------- */
+  var fly = null; /* { wrap, anim, toChat } while the orb is travelling */
+  function slotEl() { return panel && panel.querySelector('.uai-av'); }
+  function slotRect() {
+    /* where the header slot will sit once the panel has finished opening (layout values ignore the open transform) */
+    var s = slotEl(), cs = win.getComputedStyle(panel);
+    var pl = docEl.clientWidth - parseFloat(cs.right) - panel.offsetWidth;
+    var pt = docEl.clientHeight - parseFloat(cs.bottom) - panel.offsetHeight;
+    return { left: pl + s.offsetLeft, top: pt + s.offsetTop, width: s.offsetWidth, height: s.offsetHeight };
+  }
+  function landOrb() {
+    if (!fly) return;
+    var f = fly; fly = null;
+    if (f.anim) { try { f.anim.cancel(); } catch (e) {} }
+    var body = doc.getElementById('orbBody'), link = doc.querySelector('.uzio-orb'), slot = slotEl();
+    if (body && link && slot) {
+      if (f.toChat) { slot.appendChild(body); slot.classList.add('has-orb'); }
+      else { link.appendChild(body); link.style.width = ''; link.style.height = ''; slot.classList.remove('has-orb'); }
+    }
+    if (f.wrap.parentNode) f.wrap.parentNode.removeChild(f.wrap);
+  }
+  function moveOrb(toChat) {
+    var body = doc.getElementById('orbBody'), link = doc.querySelector('.uzio-orb'), slot = slotEl();
+    if (!body || !link || !slot) return;
+    landOrb();
+    if (slot.classList.contains('has-orb') === toChat) return;
+    slot.classList.toggle('no-gl', link.classList.contains('no-gl'));
+    var from = body.getBoundingClientRect(), to;
+    if (toChat) { link.style.width = from.width + 'px'; link.style.height = from.height + 'px'; to = slotRect(); }
+    else to = link.getBoundingClientRect();
+    slot.classList.remove('has-orb');
+    var wrap = doc.createElement('div');
+    wrap.className = 'uai-fly' + (link.classList.contains('no-gl') ? ' no-gl' : '');
+    wrap.style.cssText = 'left:' + to.left + 'px;top:' + to.top + 'px;width:' + to.width + 'px;height:' + to.height + 'px';
+    wrap.appendChild(body); doc.body.appendChild(wrap);
+    fly = { wrap: wrap, toChat: toChat, anim: null };
+    if (reduce || !wrap.animate) { landOrb(); return; }
+    var dx = from.left - to.left, dy = from.top - to.top, k = from.width / to.width;
+    fly.anim = wrap.animate(
+      [{ transform: 'translate(' + dx + 'px,' + dy + 'px) scale(' + k + ')' }, { transform: 'translate(0,0) scale(1)' }],
+      { duration: toChat ? 620 : 520, easing: 'cubic-bezier(.32, 1.15, .45, 1)', fill: 'both' });
+    fly.anim.onfinish = landOrb;
+  }
+
   function setOpen(on, prompt) {
     if (!panel) build();
     if (on === state.open) { if (on && prompt) ask(prompt); return; }
@@ -752,9 +796,11 @@
     if (on) {
       returnFocus = doc.activeElement;
       applyLang(); start();
+      moveOrb(true);
       if (prompt) ask(prompt);
       setTimeout(function () { try { input.focus({ preventScroll: true }); } catch (e) {} }, reduce ? 0 : 160);
     } else {
+      moveOrb(false);
       var rf = returnFocus && returnFocus.focus ? returnFocus : doc.querySelector('.uzio-orb');
       returnFocus = null;
       if (rf && rf.focus) try { rf.focus({ preventScroll: true }); } catch (e) {}
