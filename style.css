@@ -502,7 +502,7 @@ h1 { margin: 0; font-size: clamp(36px, 6.4vw, 60px); line-height: 1.03; font-wei
 
 /* ---------- Uzio orb (WebGL) ---------- */
 .uzio-orb { position: fixed; z-index: 80; right: max(10px, env(safe-area-inset-right, 0px)); bottom: calc(6px + env(safe-area-inset-bottom, 0px)); display: block; color: var(--fg); text-decoration: none; outline: none; cursor: pointer; }
-.orb-body { position: relative; display: block; width: 128px; height: 128px; animation: orbfloat 4.2s ease-in-out infinite; filter: drop-shadow(0 10px 14px var(--orb-shadow)); }
+.orb-body { position: relative; display: block; width: 96px; height: 96px; animation: orbfloat 4.2s ease-in-out infinite; filter: drop-shadow(0 10px 14px var(--orb-shadow)); }
 .uzio-orb canvas { display: block; width: 100%; height: 100%; }
 .orb-fx { position: absolute; inset: 0; pointer-events: none; overflow: visible; }
 .hat { display:none !important; }
@@ -593,7 +593,7 @@ h1 { margin: 0; font-size: clamp(36px, 6.4vw, 60px); line-height: 1.03; font-wei
   .tab svg { width: 25px; height: 25px; }
   main { padding-bottom: 190px; }
   .uzio-orb { bottom: calc(78px + env(safe-area-inset-bottom, 0px)); }
-  .orb-body { width: 104px; height: 104px; }
+  .orb-body { width: 78px; height: 78px; }
   .orb-label { display: none; }
   .toast { bottom: calc(102px + env(safe-area-inset-bottom, 0px)); }
   .large p { font-size: 17px; }
