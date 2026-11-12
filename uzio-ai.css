@@ -1,0 +1,107 @@
+/* Uzio AI chat panel. Uses the site's own theme variables, so light/dark and accent colours just work. */
+.uai {
+  --uai-accent: var(--accent, #007AFF);
+  position: fixed; z-index: 90;
+  right: max(14px, env(safe-area-inset-right, 0px));
+  bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+  width: min(400px, calc(100vw - 28px));
+  height: min(620px, calc(100dvh - 40px));
+  display: flex; flex-direction: column; overflow: hidden;
+  border-radius: 28px;
+  color: var(--fg, #000); font-family: inherit;
+  background: color-mix(in srgb, var(--card, #fff) 80%, transparent);
+  -webkit-backdrop-filter: blur(34px) saturate(1.8); backdrop-filter: blur(34px) saturate(1.8);
+  box-shadow: inset 0 0 0 .5px var(--glass-edge, rgba(255, 255, 255, .7)), inset 0 1.5px 0 var(--spec, rgba(255, 255, 255, .9)),
+    var(--glass-shadow, 0 10px 34px rgba(30, 30, 60, .14)), 0 24px 60px color-mix(in srgb, var(--uai-accent) 16%, transparent);
+  transform-origin: 90% 100%;
+  opacity: 0; visibility: hidden; transform: translateY(18px) scale(.92);
+  transition: opacity .25s ease, transform .45s cubic-bezier(.32, 1.25, .45, 1), visibility 0s linear .45s;
+}
+.uai--hub { bottom: calc(112px + env(safe-area-inset-bottom, 0px)); height: min(620px, calc(100dvh - 140px)); }
+.uai.open { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
+
+.uai-head { display: flex; align-items: center; gap: 12px; padding: 14px 12px 12px 16px; border-bottom: .5px solid var(--sep, rgba(60, 60, 67, .2)); }
+.uai-av {
+  flex: none; width: 38px; height: 38px; border-radius: 50%;
+  background: radial-gradient(circle at 32% 28%, rgba(255, 255, 255, .85), rgba(255, 255, 255, 0) 38%),
+    conic-gradient(from 20deg, #1ea7ff, #b44dff, #ff2d75, #ffa11a, #b8ff1f, #1ea7ff);
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--uai-accent) 40%, transparent);
+  animation: uaiSpin 9s linear infinite;
+}
+.uai-id { flex: 1; min-width: 0; display: grid; gap: 1px; }
+.uai-id b { font-size: 17px; font-weight: 700; letter-spacing: -.02em; }
+.uai-id small { font-size: 12.5px; color: var(--fg2, rgba(60, 60, 67, .62)); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.uai-ib {
+  flex: none; width: 34px; height: 34px; display: grid; place-items: center; border: 0; border-radius: 50%; cursor: pointer;
+  background: var(--fill, rgba(120, 120, 128, .12)); color: var(--fg, #000); transition: transform .3s cubic-bezier(.32, 1.25, .45, 1), background .2s;
+}
+.uai-ib:hover { background: var(--fill2, rgba(120, 120, 128, .2)); transform: scale(1.08); }
+.uai-ib svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+
+.uai-log { flex: 1; overflow-y: auto; overscroll-behavior: contain; padding: 16px 14px 8px; display: flex; flex-direction: column; gap: 10px; scroll-behavior: smooth; }
+.uai-msg { max-width: 88%; padding: 10px 14px; border-radius: 20px; font-size: 15px; line-height: 1.42; letter-spacing: -.01em; overflow-wrap: anywhere; animation: uaiIn .35s cubic-bezier(.32, 1.25, .45, 1) both; }
+.uai-msg b { font-weight: 700; }
+.uai-msg code { font-size: .88em; padding: 1px 6px; border-radius: 6px; background: var(--fill2, rgba(120, 120, 128, .2)); }
+.uai-bot { align-self: flex-start; border-bottom-left-radius: 7px; background: var(--fill, rgba(120, 120, 128, .12)); }
+.uai-me { align-self: flex-end; border-bottom-right-radius: 7px; color: #fff; background: linear-gradient(160deg, color-mix(in srgb, var(--uai-accent) 75%, #fff), var(--uai-accent)); box-shadow: 0 6px 16px color-mix(in srgb, var(--uai-accent) 32%, transparent); }
+.uai-typing { display: flex; gap: 5px; padding: 14px 16px; }
+.uai-typing i { width: 7px; height: 7px; border-radius: 50%; background: var(--fg2, rgba(60, 60, 67, .6)); animation: uaiDot 1s ease-in-out infinite; }
+.uai-typing i:nth-child(2) { animation-delay: .15s; }
+.uai-typing i:nth-child(3) { animation-delay: .3s; }
+
+.uai-extra { margin-top: 10px; }
+.uai-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.uai-go {
+  display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border: 0; border-radius: 99px; cursor: pointer;
+  font: inherit; font-size: 14px; font-weight: 650; color: #fff; background: var(--uai-accent);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .35), 0 6px 14px color-mix(in srgb, var(--uai-accent) 36%, transparent);
+  transition: transform .3s cubic-bezier(.32, 1.25, .45, 1);
+}
+.uai-go:hover { transform: translateY(-1px) scale(1.03); }
+
+.uai-chips { display: flex; gap: 8px; padding: 6px 14px 10px; overflow-x: auto; scrollbar-width: none; min-height: 0; }
+.uai-chips::-webkit-scrollbar { display: none; }
+.uai-chips:empty { display: none; }
+.uai-chip {
+  flex: none; padding: 8px 14px; border: 0; border-radius: 99px; cursor: pointer; font: inherit; font-size: 14px; font-weight: 600; white-space: nowrap;
+  color: color-mix(in srgb, var(--uai-accent) 85%, var(--fg, #000)); background: color-mix(in srgb, var(--uai-accent) 14%, transparent);
+  transition: transform .3s cubic-bezier(.32, 1.25, .45, 1), background .2s; animation: uaiIn .4s cubic-bezier(.32, 1.25, .45, 1) both;
+}
+.uai-chip:hover { background: color-mix(in srgb, var(--uai-accent) 24%, transparent); transform: translateY(-1px); }
+
+.uai-form { display: flex; gap: 8px; padding: 6px 12px calc(12px + env(safe-area-inset-bottom, 0px) * 0); align-items: center; }
+.uai-input {
+  flex: 1; min-width: 0; height: 44px; padding: 0 16px; border: 0; border-radius: 99px; outline: none;
+  font: inherit; font-size: 16px; color: var(--fg, #000); background: var(--fill, rgba(120, 120, 128, .12));
+  transition: box-shadow .25s;
+}
+.uai-input::placeholder { color: var(--fg2, rgba(60, 60, 67, .55)); }
+.uai-input:focus { box-shadow: 0 0 0 3px color-mix(in srgb, var(--uai-accent) 40%, transparent); }
+.uai-send {
+  flex: none; width: 44px; height: 44px; display: grid; place-items: center; border: 0; border-radius: 50%; cursor: pointer; color: #fff;
+  background: var(--uai-accent); box-shadow: 0 6px 16px color-mix(in srgb, var(--uai-accent) 40%, transparent);
+  transition: transform .3s cubic-bezier(.32, 1.25, .45, 1), opacity .2s;
+}
+.uai-send:hover:not(:disabled) { transform: scale(1.08); }
+.uai-send:disabled { opacity: .35; cursor: default; box-shadow: none; }
+.uai-send svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.uai :focus-visible { outline: 3px solid color-mix(in srgb, var(--uai-accent) 70%, transparent); outline-offset: 2px; }
+
+/* the orb glows a little while the chat is open */
+.uzio-orb.uai-active .orb-body { filter: drop-shadow(0 0 22px color-mix(in srgb, var(--accent, #007AFF) 55%, transparent)); }
+.uzio-orb.uai-active .orb-label { opacity: 0 !important; }
+
+@keyframes uaiIn { from { opacity: 0; transform: translateY(8px) scale(.96); } to { opacity: 1; transform: none; } }
+@keyframes uaiDot { 0%, 80%, 100% { transform: translateY(0); opacity: .4; } 40% { transform: translateY(-5px); opacity: 1; } }
+@keyframes uaiSpin { to { filter: hue-rotate(360deg); } }
+
+/* landing page: the orb isn't fixed there, so the panel docks bottom-right */
+@media (max-width: 640px) {
+  .uai { right: 10px; width: calc(100vw - 20px); border-radius: 26px; }
+  .uai--hub { height: min(640px, calc(100dvh - 130px)); }
+  .uai:not(.uai--hub) { height: min(640px, calc(100dvh - 24px)); bottom: calc(10px + env(safe-area-inset-bottom, 0px)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .uai, .uai-msg, .uai-chip { transition: opacity .15s linear; animation: none; transform: none; }
+  .uai-av, .uai-typing i { animation: none; }
+}

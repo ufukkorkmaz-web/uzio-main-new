@@ -444,7 +444,10 @@
     if (!b) return;
     var act = b.getAttribute('data-act'), v = b.getAttribute('data-v'), id = +b.getAttribute('data-id');
     if (act === 'demo') { toast('✨ ' + v + ' · activity ready to connect'); return; }
-    if (act === 'open-uzio') { location.hash = 'uzio-ai'; return; }
+    if (act === 'open-uzio') {
+      if (window.UzioAI) { window.UzioAI.open(b.closest('.suggest') ? b.textContent.replace(/[“”"]/g, '').trim() : ''); return; }
+      location.hash = 'uzio-ai'; return;
+    }
     if (act === 'save') {
       if (ST.saved[id]) delete ST.saved[id]; else ST.saved[id] = true;
       renderPanel(curView, true);
