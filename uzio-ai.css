@@ -2,8 +2,8 @@
 .uai {
   --uai-accent: var(--accent, #007AFF);
   position: fixed; z-index: 90;
-  right: max(14px, env(safe-area-inset-right, 0px));
-  bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+  right: var(--uai-r, max(14px, env(safe-area-inset-right, 0px)));
+  bottom: var(--uai-b, calc(18px + env(safe-area-inset-bottom, 0px)));
   width: min(400px, calc(100vw - 28px));
   height: min(620px, calc(100dvh - 40px));
   display: flex; flex-direction: column; overflow: hidden;
@@ -17,7 +17,8 @@
   opacity: 0; visibility: hidden; transform: translateY(18px) scale(.92);
   transition: opacity .25s ease, transform .45s cubic-bezier(.32, 1.25, .45, 1), visibility 0s linear .45s;
 }
-.uai--hub { bottom: calc(112px + env(safe-area-inset-bottom, 0px)); height: min(620px, calc(100dvh - 140px)); }
+/* on the game hub the chat grows from the exact spot where the orb sits (--uai-r / --uai-b are measured in JS) */
+.uai--hub { height: min(620px, calc(100dvh - var(--uai-b, 18px) - 84px)); }
 .uai.open { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
 
 .uai-head { display: flex; align-items: center; gap: 12px; padding: 14px 12px 12px 16px; border-bottom: .5px solid var(--sep, rgba(60, 60, 67, .2)); }
@@ -98,8 +99,8 @@
 
 /* landing page: the orb isn't fixed there, so the panel docks bottom-right */
 @media (max-width: 640px) {
-  .uai { right: 10px; width: calc(100vw - 20px); border-radius: 26px; }
-  .uai--hub { height: min(640px, calc(100dvh - 130px)); }
+  .uai { right: var(--uai-r, 10px); width: calc(100vw - 20px - (var(--uai-r, 10px) - 10px)); border-radius: 26px; }
+  .uai--hub { height: min(640px, calc(100dvh - var(--uai-b, 18px) - 84px)); }
   .uai:not(.uai--hub) { height: min(640px, calc(100dvh - 24px)); bottom: calc(10px + env(safe-area-inset-bottom, 0px)); }
 }
 @media (prefers-reduced-motion: reduce) {
