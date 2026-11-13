@@ -663,6 +663,7 @@
   var SR = win.SpeechRecognition || win.webkitSpeechRecognition;
   var SR_LANG = { en: 'en-US', tr: 'tr-TR', fr: 'fr-FR', de: 'de-DE' };
   var micBtn = null, rec = null, recAborted = false;
+  function cur(on) { if (win.UzioCursor) win.UzioCursor.busy('chat', on); } /* spinning ring by the cursor while Uzio is thinking */
   var returnFocus = null;
 
   function curLang() {
@@ -781,7 +782,7 @@
       if (extra) { var a = doc.createElement('div'); a.className = 'uai-extra'; a.innerHTML = extra; node.appendChild(a); }
       chipsEl.innerHTML = chipHtml(res.rel, lang);
       chipsEl.scrollLeft = 0;
-      state.busy = false; sendBtn.disabled = !input.value.trim(); if (micBtn) micBtn.disabled = false; scrollDown();
+      state.busy = false; cur(false); sendBtn.disabled = !input.value.trim(); if (micBtn) micBtn.disabled = false; scrollDown();
       if (res.nav) setTimeout(function () { go(res.nav); }, reduce ? 0 : 450);
     }
     if (instant || reduce) { finish(); return; }
@@ -801,7 +802,7 @@
     addUser(text); chipsEl.innerHTML = '';
     var res = reply(text, { lang: lang, profile: profile(), state: state, id: id, view: isHub ? (win.location.hash.slice(1) || 'home') : null });
     state.last = res.id || state.last;
-    state.busy = true; sendBtn.disabled = true; if (micBtn) micBtn.disabled = true;
+    state.busy = true; sendBtn.disabled = true; if (micBtn) micBtn.disabled = true; cur(true);
     var t = typing();
     setTimeout(function () { if (t.parentNode) t.parentNode.removeChild(t); say(res, lang); }, reduce ? 0 : 380 + Math.min(500, res.text.length * 1.2));
   }
@@ -857,7 +858,7 @@
   }
 
   function reset() {
-    logEl.innerHTML = ''; state.last = null; state.busy = false; chipsEl.innerHTML = ''; if (micBtn) micBtn.disabled = false;
+    logEl.innerHTML = ''; state.last = null; state.busy = false; chipsEl.innerHTML = ''; if (micBtn) micBtn.disabled = false; cur(false);
     start(true);
   }
   function start(force) {
