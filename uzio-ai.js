@@ -37,10 +37,10 @@
 
     { id: 'can', t: T('What can you do?', 'Neler yapabilirsin?', 'Que sais-tu faire ?', 'Was kannst du?'),
       k: ['what can you do', 'help', 'capabilities', 'features', 'abilities', 'what do you know', 'neler yapabilirsin', 'ne yapabilirsin', 'yardim', 'que sais tu faire', 'aide', 'was kannst du', 'hilfe', 'kannst du'],
-      a: T('I know everything on this site: every game mode, the video drops, the perk shop and its prices, XP, levels, coins, streaks, quests, events, languages, the menu and how your profile works. I can also **invent a challenge** for you on the spot. Try “give me a hard challenge”.',
-           'Bu sitedeki her şeyi biliyorum: tüm oyun modları, video içerikleri, avantaj mağazası ve fiyatları, XP, seviyeler, jetonlar, seriler, görevler, etkinlikler, diller, menü ve profilin nasıl çalıştığı. Ayrıca anında sana **bir meydan okuma** üretebilirim. “Bana zor bir meydan okuma ver” de.',
-           'Je connais tout sur ce site : chaque mode de jeu, les vidéos, la boutique d’avantages et ses prix, les XP, niveaux, pièces, séries, quêtes, événements, langues, le menu et ton profil. Je peux aussi **inventer un défi** sur-le-champ. Essaie « donne-moi un défi difficile ».',
-           'Ich kenne alles auf dieser Seite: jeden Spielmodus, die Videos, den Perk-Shop samt Preisen, XP, Level, Münzen, Serien, Quests, Events, Sprachen, das Menü und dein Profil. Außerdem kann ich dir sofort **eine Challenge erfinden**. Sag einfach „gib mir eine schwere Challenge“.'),
+      a: T('I know everything on this site: every game mode, the video drops, the perk shop and its prices, XP, levels, coins, streaks, quests, events, languages, the menu and how your profile works. I can also **invent a challenge** for you on the spot. Try “give me a hard challenge”. I can also **open any tab** for you: just say “open Watch”.',
+           'Bu sitedeki her şeyi biliyorum: tüm oyun modları, video içerikleri, avantaj mağazası ve fiyatları, XP, seviyeler, jetonlar, seriler, görevler, etkinlikler, diller, menü ve profilin nasıl çalıştığı. Ayrıca anında sana **bir meydan okuma** üretebilirim. “Bana zor bir meydan okuma ver” de. İstersen **herhangi bir sekmeyi de açarım**: “İzle’yi aç” demen yeterli.',
+           'Je connais tout sur ce site : chaque mode de jeu, les vidéos, la boutique d’avantages et ses prix, les XP, niveaux, pièces, séries, quêtes, événements, langues, le menu et ton profil. Je peux aussi **inventer un défi** sur-le-champ. Essaie « donne-moi un défi difficile ». Je peux aussi **ouvrir n’importe quel onglet** : dis « ouvre Regarder ».',
+           'Ich kenne alles auf dieser Seite: jeden Spielmodus, die Videos, den Perk-Shop samt Preisen, XP, Level, Münzen, Serien, Quests, Events, Sprachen, das Menü und dein Profil. Außerdem kann ich dir sofort **eine Challenge erfinden**. Sag einfach „gib mir eine schwere Challenge“. Ich kann auch **jeden Tab öffnen**: sag „öffne Ansehen“.'),
       go: ['uzio-ai'], rel: ['challenge', 'play', 'perks'] },
 
     { id: 'how', t: T('How do I get started?', 'Nasıl başlarım?', 'Comment commencer ?', 'Wie fange ich an?'),
@@ -525,6 +525,40 @@
     return '';
   }
 
+  /* ---------- tab commands: "open the Watch tab", "izle sekmesini aç", "ouvre Perks", "öffne Extras" ---------- */
+  var NAV_RE = {
+    home:      / (home|homepage|home page|main page|hub|dashboard|ana ?sayfa\w*|accueil|startseite|start) /,
+    play:      / (play|games?|oyna\w*|oyun|oyunlar\w*|jouer|jeux|spielen|spiele) /,
+    watch:     / (watch|videos?|clips?|izle\w*|regarder|regarde|vidos?|ansehen|anschauen) /,
+    perks:     / (perks?|shop|store|rewards?|magaza\w*|avantaj\w*|boutique|avantages?|extras|belohnungen) /,
+    'uzio-ai': / (uzio ai\w*|ai tab|game master|oyun ustas\w*|maitre du jeu|spielleiter) /
+  };
+  var NAV_STRONG = / (open|opens|go to|goto|take me to|bring me to|switch to|navigate to|navigate|jump to|head to|launch|visit|ac|acar misin|acsana|git|gitsene|gotur\w*|gec|ouvre|ouvrir|va a|va sur|aller a|aller sur|emmene moi a|emmene moi sur|amene moi a|passe a|passe sur|offne|offnen|geh zu|geh auf|gehe zu|gehe auf|bring mich zu|wechsle zu|wechsle auf|wechsel zu) /;
+  var NAV_WEAK = / (show me|show|display|see|goster\w*|montre moi|montre|affiche|zeig mir|zeig|zeige mir|zeige) /;
+  var NAV_TABWORD = / (tab|tabs|page|section|screen|sekme\w*|sayfa\w*|onglet\w*|seite|bereich) /;
+  var NAV_INFO = { home: 'home', play: 'modes', watch: 'videos', perks: 'perks', 'uzio-ai': 'uzioai' };
+  var NAV_SAY = {
+    en: ['I’m on it! Opening **{v}**…', 'Sure thing, taking you to **{v}**…', 'Coming right up: **{v}**!'],
+    tr: ['Hemen hallediyorum! **{v}** açılıyor…', 'Tamamdır, seni **{v}** sekmesine götürüyorum…', 'Geliyor: **{v}**!'],
+    fr: ['Je m’en occupe ! J’ouvre **{v}**…', 'Avec plaisir, je t’emmène sur **{v}**…', 'Voilà : **{v}** !'],
+    de: ['Bin dran! **{v}** wird geöffnet…', 'Klar, ich bringe dich zu **{v}**…', 'Kommt sofort: **{v}**!']
+  };
+  var NAV_HERE = {
+    en: 'You’re already on **{v}**! Want to know what’s here?', tr: 'Zaten **{v}** sekmesindesin! Burada neler var, anlatayım mı?',
+    fr: 'Tu es déjà sur **{v}** ! Je te raconte ce qu’il y a ici ?', de: 'Du bist schon bei **{v}**! Soll ich erzählen, was es hier gibt?'
+  };
+  function detectNav(q) {
+    var t = q.text, hit = null, best = 1e9;
+    for (var v in NAV_RE) {
+      var m = NAV_RE[v].exec(t);
+      if (m && m.index < best) { best = m.index; hit = v; }
+    }
+    if (!hit) return null;
+    var strong = NAV_STRONG.test(t), tab = NAV_TABWORD.test(t);
+    if (strong || (tab && NAV_WEAK.test(t)) || (tab && q.tok.length <= 4)) return hit;
+    return null;
+  }
+
   /* ---------- the public reply() ---------- */
   function reply(text, opts) {
     opts = opts || {};
@@ -537,6 +571,16 @@
     var entry = opts.id ? BY_ID[opts.id] : null;
     var top = 0, second = 0, secondE = null;
 
+    if (!entry) {
+      var nv = detectNav(q);
+      if (nv) {
+        var vn = VIEW_NAME[nv][lang];
+        out.nav = nv; out.rel = [NAV_INFO[nv]];
+        if (opts.view && opts.view === nv) { out.text = NAV_HERE[lang].replace('{v}', vn); out.nav = null; }
+        else out.text = pick(NAV_SAY[lang]).replace('{v}', vn);
+        return out;
+      }
+    }
     if (!entry) {
       if (!q.tok.length) { out.text = ui.greet; out.rel = ['can', 'challenge', 'modes']; return out; }
       /* "more" / "another" follow-ups */
@@ -707,6 +751,7 @@
       chipsEl.innerHTML = chipHtml(res.rel, lang);
       chipsEl.scrollLeft = 0;
       state.busy = false; sendBtn.disabled = !input.value.trim(); scrollDown();
+      if (res.nav) setTimeout(function () { go(res.nav); }, reduce ? 0 : 450);
     }
     if (instant || reduce) { finish(); return; }
     var step = Math.max(1, Math.ceil(words.length / 70));
@@ -723,7 +768,7 @@
     if (state.busy) return;
     var lang = curLang();
     addUser(text); chipsEl.innerHTML = '';
-    var res = reply(text, { lang: lang, profile: profile(), state: state, id: id });
+    var res = reply(text, { lang: lang, profile: profile(), state: state, id: id, view: isHub ? (win.location.hash.slice(1) || 'home') : null });
     state.last = res.id || state.last;
     state.busy = true; sendBtn.disabled = true;
     var t = typing();
