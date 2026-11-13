@@ -37,10 +37,10 @@
 
     { id: 'can', t: T('What can you do?', 'Neler yapabilirsin?', 'Que sais-tu faire ?', 'Was kannst du?'),
       k: ['what can you do', 'help', 'capabilities', 'features', 'abilities', 'what do you know', 'neler yapabilirsin', 'ne yapabilirsin', 'yardim', 'que sais tu faire', 'aide', 'was kannst du', 'hilfe', 'kannst du'],
-      a: T('I know everything on this site: every game mode, the video drops, the perk shop and its prices, XP, levels, coins, streaks, quests, events, languages, the menu and how your profile works. I can also **invent a challenge** for you on the spot. Try “give me a hard challenge”. I can also **open any tab** for you: just say “open Watch”.',
-           'Bu sitedeki her şeyi biliyorum: tüm oyun modları, video içerikleri, avantaj mağazası ve fiyatları, XP, seviyeler, jetonlar, seriler, görevler, etkinlikler, diller, menü ve profilin nasıl çalıştığı. Ayrıca anında sana **bir meydan okuma** üretebilirim. “Bana zor bir meydan okuma ver” de. İstersen **herhangi bir sekmeyi de açarım**: “İzle’yi aç” demen yeterli.',
-           'Je connais tout sur ce site : chaque mode de jeu, les vidéos, la boutique d’avantages et ses prix, les XP, niveaux, pièces, séries, quêtes, événements, langues, le menu et ton profil. Je peux aussi **inventer un défi** sur-le-champ. Essaie « donne-moi un défi difficile ». Je peux aussi **ouvrir n’importe quel onglet** : dis « ouvre Regarder ».',
-           'Ich kenne alles auf dieser Seite: jeden Spielmodus, die Videos, den Perk-Shop samt Preisen, XP, Level, Münzen, Serien, Quests, Events, Sprachen, das Menü und dein Profil. Außerdem kann ich dir sofort **eine Challenge erfinden**. Sag einfach „gib mir eine schwere Challenge“. Ich kann auch **jeden Tab öffnen**: sag „öffne Ansehen“.'),
+      a: T('I know everything on this site: every game mode, the video drops, the perk shop and its prices, XP, levels, coins, streaks, quests, events, languages, the menu and how your profile works. I can also **invent a challenge** for you on the spot. Try “give me a hard challenge”. I can also **open any tab** for you: just say “open Watch”. You can even tap 🎤 and talk to me.',
+           'Bu sitedeki her şeyi biliyorum: tüm oyun modları, video içerikleri, avantaj mağazası ve fiyatları, XP, seviyeler, jetonlar, seriler, görevler, etkinlikler, diller, menü ve profilin nasıl çalıştığı. Ayrıca anında sana **bir meydan okuma** üretebilirim. “Bana zor bir meydan okuma ver” de. İstersen **herhangi bir sekmeyi de açarım**: “İzle’yi aç” demen yeterli. 🎤’a dokunup benimle konuşabilirsin de.',
+           'Je connais tout sur ce site : chaque mode de jeu, les vidéos, la boutique d’avantages et ses prix, les XP, niveaux, pièces, séries, quêtes, événements, langues, le menu et ton profil. Je peux aussi **inventer un défi** sur-le-champ. Essaie « donne-moi un défi difficile ». Je peux aussi **ouvrir n’importe quel onglet** : dis « ouvre Regarder ». Tu peux aussi toucher 🎤 et me parler.',
+           'Ich kenne alles auf dieser Seite: jeden Spielmodus, die Videos, den Perk-Shop samt Preisen, XP, Level, Münzen, Serien, Quests, Events, Sprachen, das Menü und dein Profil. Außerdem kann ich dir sofort **eine Challenge erfinden**. Sag einfach „gib mir eine schwere Challenge“. Ich kann auch **jeden Tab öffnen**: sag „öffne Ansehen“. Du kannst auch auf 🎤 tippen und mit mir sprechen.'),
       go: ['uzio-ai'], rel: ['challenge', 'play', 'perks'] },
 
     { id: 'how', t: T('How do I get started?', 'Nasıl başlarım?', 'Comment commencer ?', 'Wie fange ich an?'),
@@ -311,10 +311,10 @@
 
     { id: 'privacy', t: T('Privacy & saved data', 'Gizlilik ve veriler', 'Confidentialité', 'Datenschutz'),
       k: ['privacy', 'profile saved', 'where is my data', 'data', 'saved', 'save', 'remember', 'storage', 'cookies', 'localstorage', 'tracking', 'safe', 'gizlilik', 'veri', 'kaydet', 'hatirla', 'cerez', 'guvenli', 'confidentialite', 'donnees', 'sauvegarde', 'cookies', 'datenschutz', 'daten', 'speichern', 'sicher'],
-      a: T('Everything is stored **only in your own browser** (local storage): your name, play style and interests, your language and your light/dark choice. There’s no sign-in and nothing is sent to a server, and that includes this chat: I run entirely in your browser too.',
-           'Her şey **yalnızca kendi tarayıcında** (yerel depolama) saklanır: adın, oyun tarzın ve ilgi alanların, dilin ve açık/koyu seçimin. Giriş yok ve hiçbir şey sunucuya gönderilmez; bu sohbet de dahil: ben de tamamen tarayıcında çalışırım.',
-           'Tout est stocké **uniquement dans ton navigateur** (stockage local) : ton prénom, ton style de jeu et centres d’intérêt, ta langue et ton choix clair/sombre. Pas de connexion et rien n’est envoyé à un serveur, y compris ce chat : je tourne aussi dans ton navigateur.',
-           'Alles wird **nur in deinem eigenen Browser** (Local Storage) gespeichert: Name, Spielstil und Interessen, Sprache und Hell/Dunkel-Wahl. Es gibt keine Anmeldung und nichts geht an einen Server – auch dieser Chat nicht: Ich laufe komplett in deinem Browser.'),
+      a: T('Everything is stored **only in your own browser** (local storage): your name, play style and interests, your language and your light/dark choice. There’s no sign-in and nothing is sent to a server, and that includes this chat: I run entirely in your browser too. The one exception is the 🎤 mic: if you use voice input, your browser’s speech service (Google’s in Chrome, for example) transcribes what you say, and Uzio only receives the text.',
+           'Her şey **yalnızca kendi tarayıcında** (yerel depolama) saklanır: adın, oyun tarzın ve ilgi alanların, dilin ve açık/koyu seçimin. Giriş yok ve hiçbir şey sunucuya gönderilmez; bu sohbet de dahil: ben de tamamen tarayıcında çalışırım. Tek istisna 🎤 mikrofon: sesli giriş kullanırsan tarayıcının konuşma servisi (örneğin Chrome’da Google’ınki) söylediklerini yazıya çevirir; Uzio yalnızca metni alır.',
+           'Tout est stocké **uniquement dans ton navigateur** (stockage local) : ton prénom, ton style de jeu et centres d’intérêt, ta langue et ton choix clair/sombre. Pas de connexion et rien n’est envoyé à un serveur, y compris ce chat : je tourne aussi dans ton navigateur. Seule exception, le micro 🎤 : si tu utilises la saisie vocale, le service vocal de ton navigateur (celui de Google dans Chrome, par exemple) transcrit ta voix, et Uzio ne reçoit que le texte.',
+           'Alles wird **nur in deinem eigenen Browser** (Local Storage) gespeichert: Name, Spielstil und Interessen, Sprache und Hell/Dunkel-Wahl. Es gibt keine Anmeldung und nichts geht an einen Server – auch dieser Chat nicht: Ich laufe komplett in deinem Browser. Die einzige Ausnahme ist das 🎤-Mikrofon: Bei Spracheingabe transkribiert der Sprachdienst deines Browsers (z. B. Googles in Chrome) deine Worte, und Uzio erhält nur den Text.'),
       go: [], rel: ['onboarding', 'theme', 'languages'] },
 
     { id: 'demo', t: T('Is it playable yet?', 'Oynanabilir mi?', 'Est-ce jouable ?', 'Schon spielbar?'),
@@ -341,6 +341,15 @@
            'C’est un site statique léger : **HTML, CSS et JavaScript** purs, sans framework ni bibliothèque. Deux points d’entrée (`index.html` et `main-page.html`), une interface vitrée façon iOS en clair/sombre, quatre langues, et l’orbe est un **shader WebGL** écrit à la main. Ce chat est aussi du JS pur avec une base de connaissances intégrée.',
            'Eine schlanke statische Seite: reines **HTML, CSS und JavaScript** ohne Framework oder Bibliotheken. Zwei Einstiegspunkte (`index.html` und `main-page.html`), eine iOS-artige Glas-Oberfläche in Hell/Dunkel, vier Sprachen, und die Kugel ist ein handgeschriebener **WebGL-Shader**. Dieser Chat ist ebenfalls reines JS mit eingebauter Wissensbasis.'),
       go: [], rel: ['orb', 'demo', 'privacy'] },
+
+    { id: 'voice', t: T('Voice commands', 'Sesli komutlar', 'Commandes vocales', 'Sprachbefehle'),
+      k: ['voice', 'voice command', 'voice commands', 'voice input', 'microphone', 'mic', 'speak', 'speech', 'talk to you', 'talk to me', 'talk', 'sesli', 'ses', 'mikrofon', 'konus', 'konusabilir miyim', 'sesle', 'voix', 'vocal', 'vocale', 'micro', 'parler', 'parle', 'commande vocale', 'commandes vocales', 'stimme', 'sprachbefehl', 'sprachbefehle', 'sprachsteuerung', 'sprechen', 'spracheingabe'],
+      a: function (lang) {
+        var base = VOICE[lang];
+        if (typeof document !== 'undefined' && !(win.SpeechRecognition || win.webkitSpeechRecognition)) base += ' ' + VOICE_NO[lang];
+        return base;
+      },
+      go: [], rel: ['can', 'tabs', 'privacy'] },
 
     { id: 'backtop', t: T('Back to top', 'Başa dön', 'Retour en haut', 'Nach oben'),
       k: ['back to top', 'scroll', 'top button', 'basa don', 'kaydir', 'retour en haut', 'defiler', 'nach oben', 'scrollen'],
@@ -381,6 +390,17 @@
       a: T('Why did the player bring a ladder to the boss fight? Because the combo was **sky-high**. 🪜', 'Oyuncu boss savaşına neden merdiven getirdi? Çünkü kombo **göklerdeydi**. 🪜', 'Pourquoi le joueur a-t-il apporté une échelle au combat de boss ? Parce que le combo était **au plafond**. 🪜', 'Warum brachte der Spieler eine Leiter zum Bosskampf mit? Weil die Combo **himmelhoch** war. 🪜'),
       go: [], rel: ['boss', 'combo', 'challenge'] }
   ];
+
+  var VOICE = T(
+    'Yes! Tap the 🎤 button next to the text box and talk to me. I listen in the site’s language (English, Türkçe, Français or Deutsch) and treat it just like typing. Try “open the Watch tab”, “how much is the Streak Shield?” or “give me a hard challenge”. Your browser asks for microphone permission the first time. Voice input works in Chrome, Edge and Safari (not Firefox), and your browser’s speech service does the transcribing.',
+    'Evet! Metin kutusunun yanındaki 🎤 düğmesine dokun ve benimle konuş. Sitenin diliyle (English, Türkçe, Français, Deutsch) dinlerim ve yazmışsın gibi cevap veririm. “İzle sekmesini aç”, “Streak Shield kaç jeton?” ya da “bana zor bir meydan okuma ver” dene. Tarayıcı ilk seferde mikrofon izni ister. Sesli giriş Chrome, Edge ve Safari’de çalışır (Firefox’ta çalışmaz); yazıya çevirmeyi tarayıcının konuşma servisi yapar.',
+    'Oui ! Touche le bouton 🎤 à côté de la zone de texte et parle-moi. J’écoute dans la langue du site (English, Türkçe, Français, Deutsch) et je traite ça comme si tu l’avais écrit. Essaie « ouvre Regarder », « combien coûte le Streak Shield ? » ou « donne-moi un défi difficile ». Le navigateur demande l’accès au micro la première fois. La saisie vocale fonctionne dans Chrome, Edge et Safari (pas Firefox), et c’est le service vocal du navigateur qui transcrit.',
+    'Ja! Tippe auf den 🎤-Button neben dem Textfeld und sprich mit mir. Ich höre in der Sprache der Seite zu (English, Türkçe, Français, Deutsch) und behandle es wie getippten Text. Probier „öffne Ansehen“, „wie viel kostet der Streak Shield?“ oder „gib mir eine schwere Challenge“. Beim ersten Mal fragt der Browser nach Mikrofonzugriff. Spracheingabe funktioniert in Chrome, Edge und Safari (nicht Firefox); die Transkription übernimmt der Sprachdienst deines Browsers.');
+  var VOICE_NO = T(
+    '⚠️ Your browser doesn’t support voice input, so the 🎤 button is hidden here.',
+    '⚠️ Tarayıcın sesli girişi desteklemiyor, bu yüzden 🎤 düğmesi burada gizli.',
+    '⚠️ Ton navigateur ne gère pas la saisie vocale, donc le bouton 🎤 est masqué ici.',
+    '⚠️ Dein Browser unterstützt keine Spracheingabe, deshalb ist der 🎤-Button hier ausgeblendet.');
 
   var BY_ID = {};
   KB.forEach(function (e) { e.k = e.k.filter(function (k, i, a) { return a.indexOf(k) === i; }); BY_ID[e.id] = e; });
@@ -437,25 +457,29 @@
 
   var UI = {
     en: { title: 'Uzio AI', sub: 'Knows everything about Uzio', ph: 'Ask me anything about Uzio…', send: 'Send', close: 'Close', reset: 'New chat', open: 'Open Uzio AI',
-          thinking: 'Uzio is typing',
+          thinking: 'Uzio is typing', mic: 'Voice input', micStop: 'Stop listening', listening: 'Listening…',
+          micBlocked: 'I can’t use the microphone. Allow microphone access for this site in your browser settings, then tap 🎤 again.', micNone: 'I didn’t catch that. Tap 🎤 and try again.', micNoDevice: 'I can’t find a microphone on this device.', micNet: 'Voice input needs an internet connection (your browser’s speech service). You can still type to me.', micErr: 'Voice input hit a snag. You can still type to me.',
           fallback: 'I only know Uzio, and I couldn’t find that on the site. Here are things I can help with:',
           greetNamed: 'Hey {n}! 👋 I’m Uzio. I know every corner of this site, and I can invent challenges for you. What are you curious about?',
           greet: 'Hey! 👋 I’m Uzio. I know every corner of this site, and I can invent challenges for you. What are you curious about?',
           more: 'Here’s where we can go next:', related: 'You might also like:' },
     tr: { title: 'Uzio AI', sub: 'Uzio hakkında her şeyi bilir', ph: 'Uzio hakkında her şeyi sor…', send: 'Gönder', close: 'Kapat', reset: 'Yeni sohbet', open: 'Uzio AI’ı aç',
-          thinking: 'Uzio yazıyor',
+          thinking: 'Uzio yazıyor', mic: 'Sesli giriş', micStop: 'Dinlemeyi durdur', listening: 'Dinliyorum…',
+          micBlocked: 'Mikrofonu kullanamıyorum. Tarayıcı ayarlarından bu site için mikrofon iznini aç, sonra 🎤’a tekrar dokun.', micNone: 'Seni duyamadım. 🎤’a dokunup tekrar dene.', micNoDevice: 'Bu cihazda mikrofon bulamıyorum.', micNet: 'Sesli giriş internet bağlantısı gerektirir (tarayıcının konuşma servisi). Yine de yazabilirsin.', micErr: 'Sesli girişte bir sorun çıktı. Yine de yazabilirsin.',
           fallback: 'Ben sadece Uzio’yu biliyorum ve bunu sitede bulamadım. Şunlarda yardımcı olabilirim:',
           greetNamed: 'Selam {n}! 👋 Ben Uzio. Bu sitenin her köşesini biliyorum ve senin için meydan okumalar icat edebilirim. Neyi merak ediyorsun?',
           greet: 'Selam! 👋 Ben Uzio. Bu sitenin her köşesini biliyorum ve senin için meydan okumalar icat edebilirim. Neyi merak ediyorsun?',
           more: 'Şuradan devam edebiliriz:', related: 'Bunlar da ilgini çekebilir:' },
     fr: { title: 'Uzio AI', sub: 'Sait tout sur Uzio', ph: 'Demande-moi tout sur Uzio…', send: 'Envoyer', close: 'Fermer', reset: 'Nouveau chat', open: 'Ouvrir Uzio AI',
-          thinking: 'Uzio écrit',
+          thinking: 'Uzio écrit', mic: 'Saisie vocale', micStop: 'Arrêter l’écoute', listening: 'J’écoute…',
+          micBlocked: 'Je ne peux pas utiliser le micro. Autorise l’accès au micro pour ce site dans les réglages du navigateur, puis touche 🎤 à nouveau.', micNone: 'Je n’ai pas compris. Touche 🎤 et réessaie.', micNoDevice: 'Je ne trouve pas de micro sur cet appareil.', micNet: 'La saisie vocale nécessite une connexion internet (le service vocal de ton navigateur). Tu peux toujours écrire.', micErr: 'La saisie vocale a rencontré un souci. Tu peux toujours écrire.',
           fallback: 'Je ne connais qu’Uzio et je n’ai pas trouvé ça sur le site. Voici ce dont je peux parler :',
           greetNamed: 'Salut {n} ! 👋 Je suis Uzio. Je connais chaque recoin de ce site et je peux inventer des défis pour toi. Qu’est-ce qui te fait envie ?',
           greet: 'Salut ! 👋 Je suis Uzio. Je connais chaque recoin de ce site et je peux inventer des défis pour toi. Qu’est-ce qui te fait envie ?',
           more: 'Voici où on peut aller ensuite :', related: 'Ça pourrait aussi t’intéresser :' },
     de: { title: 'Uzio AI', sub: 'Weiß alles über Uzio', ph: 'Frag mich alles über Uzio…', send: 'Senden', close: 'Schließen', reset: 'Neuer Chat', open: 'Uzio AI öffnen',
-          thinking: 'Uzio tippt',
+          thinking: 'Uzio tippt', mic: 'Spracheingabe', micStop: 'Zuhören beenden', listening: 'Ich höre zu…',
+          micBlocked: 'Ich kann das Mikrofon nicht nutzen. Erlaube den Mikrofonzugriff für diese Seite in den Browsereinstellungen und tippe dann erneut auf 🎤.', micNone: 'Das habe ich nicht verstanden. Tippe auf 🎤 und versuche es nochmal.', micNoDevice: 'Ich finde auf diesem Gerät kein Mikrofon.', micNet: 'Spracheingabe braucht eine Internetverbindung (der Sprachdienst deines Browsers). Du kannst mir trotzdem schreiben.', micErr: 'Bei der Spracheingabe ist etwas schiefgelaufen. Du kannst mir trotzdem schreiben.',
           fallback: 'Ich kenne nur Uzio und habe das auf der Seite nicht gefunden. Dabei kann ich helfen:',
           greetNamed: 'Hey {n}! 👋 Ich bin Uzio. Ich kenne jede Ecke dieser Seite und kann Challenges für dich erfinden. Was interessiert dich?',
           greet: 'Hey! 👋 Ich bin Uzio. Ich kenne jede Ecke dieser Seite und kann Challenges für dich erfinden. Was interessiert dich?',
@@ -636,6 +660,9 @@
   var isHub = !!doc.getElementById('panel');
   var panel, logEl, form, input, sendBtn, chipsEl, titleEl, subEl, closeBtn, resetBtn;
   var state = { last: null, busy: false, open: false, started: false };
+  var SR = win.SpeechRecognition || win.webkitSpeechRecognition;
+  var SR_LANG = { en: 'en-US', tr: 'tr-TR', fr: 'fr-FR', de: 'de-DE' };
+  var micBtn = null, rec = null, recAborted = false;
   var returnFocus = null;
 
   function curLang() {
@@ -673,12 +700,15 @@
       '<div class="uai-chips" id="uaiChips"></div>' +
       '<form class="uai-form" autocomplete="off">' +
         '<input class="uai-input" type="text" maxlength="240" enterkeyhint="send" spellcheck="false">' +
+        (SR ? '<button class="uai-mic" type="button" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3"/></svg></button>' : '') +
         '<button class="uai-send" type="submit" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V6M6.5 11.5 12 6l5.5 5.5"/></svg></button>' +
       '</form>';
     doc.body.appendChild(panel);
     logEl = panel.querySelector('.uai-log'); chipsEl = panel.querySelector('.uai-chips');
     form = panel.querySelector('form'); input = panel.querySelector('.uai-input'); sendBtn = panel.querySelector('.uai-send');
     titleEl = panel.querySelector('#uaiTitle'); subEl = panel.querySelector('#uaiSub');
+    micBtn = panel.querySelector('.uai-mic');
+    if (micBtn) micBtn.addEventListener('click', function () { if (rec) stopMic(); else startMic(); });
     closeBtn = panel.querySelector('[data-uai="close"]'); resetBtn = panel.querySelector('[data-uai="reset"]');
 
     form.addEventListener('submit', function (e) { e.preventDefault(); var v = input.value.trim(); if (v) { input.value = ''; sendBtn.disabled = true; ask(v); } });
@@ -705,6 +735,7 @@
     closeBtn.setAttribute('aria-label', ui.close); closeBtn.title = ui.close;
     resetBtn.setAttribute('aria-label', ui.reset); resetBtn.title = ui.reset;
     panel.setAttribute('aria-label', ui.title);
+    if (micBtn) { var lbl = rec ? ui.micStop : ui.mic; micBtn.setAttribute('aria-label', lbl); micBtn.title = lbl; if (rec) input.placeholder = ui.listening; }
     Array.prototype.forEach.call(doc.querySelectorAll('.uzio-orb'), function (o) { o.setAttribute('aria-label', ui.open); });
   }
 
@@ -741,7 +772,7 @@
 
   function say(res, lang, instant) {
     var node = addBot(), words = res.text.split(/(\s+)/), i = 0;
-    state.busy = true; sendBtn.disabled = true;
+    state.busy = true; sendBtn.disabled = true; if (micBtn) micBtn.disabled = true;
     function finish() {
       node.innerHTML = fmt(res.text);
       var extra = '';
@@ -750,7 +781,7 @@
       if (extra) { var a = doc.createElement('div'); a.className = 'uai-extra'; a.innerHTML = extra; node.appendChild(a); }
       chipsEl.innerHTML = chipHtml(res.rel, lang);
       chipsEl.scrollLeft = 0;
-      state.busy = false; sendBtn.disabled = !input.value.trim(); scrollDown();
+      state.busy = false; sendBtn.disabled = !input.value.trim(); if (micBtn) micBtn.disabled = false; scrollDown();
       if (res.nav) setTimeout(function () { go(res.nav); }, reduce ? 0 : 450);
     }
     if (instant || reduce) { finish(); return; }
@@ -770,13 +801,63 @@
     addUser(text); chipsEl.innerHTML = '';
     var res = reply(text, { lang: lang, profile: profile(), state: state, id: id, view: isHub ? (win.location.hash.slice(1) || 'home') : null });
     state.last = res.id || state.last;
-    state.busy = true; sendBtn.disabled = true;
+    state.busy = true; sendBtn.disabled = true; if (micBtn) micBtn.disabled = true;
     var t = typing();
     setTimeout(function () { if (t.parentNode) t.parentNode.removeChild(t); say(res, lang); }, reduce ? 0 : 380 + Math.min(500, res.text.length * 1.2));
   }
 
+  /* ---------- voice input (the browser's SpeechRecognition; transcript goes through the normal ask() path) ---------- */
+  function voiceFix(t) {
+    return t.replace(/\b(uzi|uzzio|uzeo|uzzi|oozio)\b/gi, 'Uzio').replace(/\bu\.? ?z\.? ?i\.? ?o\b/gi, 'Uzio')
+      .replace(/\bUzio a\.? ?i\b/gi, 'Uzio AI').replace(/\b(perx|purks|perk's)\b/gi, 'perks').trim();
+  }
+  function note(text) { var d = addBot(); d.innerHTML = fmt(text); scrollDown(); }
+  function micUI(on) {
+    if (!micBtn) return;
+    var ui = UI[curLang()];
+    micBtn.classList.toggle('on', on); micBtn.setAttribute('aria-pressed', String(on));
+    micBtn.setAttribute('aria-label', on ? ui.micStop : ui.mic); micBtn.title = on ? ui.micStop : ui.mic;
+    panel.classList.toggle('uai-listening', on);
+    input.placeholder = on ? ui.listening : ui.ph;
+  }
+  function stopMic(abort) {
+    if (!rec) return;
+    recAborted = !!abort;
+    try { abort ? rec.abort() : rec.stop(); } catch (e) {}
+  }
+  function startMic() {
+    if (!SR || state.busy || rec) return;
+    var lang = curLang(), ui = UI[lang], finalText = '', errored = false;
+    var r = new SR();
+    r.lang = SR_LANG[lang]; r.interimResults = true; r.continuous = false; r.maxAlternatives = 1;
+    recAborted = false; input.value = ''; sendBtn.disabled = true;
+    r.onstart = function () { micUI(true); };
+    r.onresult = function (e) {
+      var interim = '';
+      for (var i = e.resultIndex; i < e.results.length; i++) {
+        var res = e.results[i];
+        if (res.isFinal) finalText += res[0].transcript; else interim += res[0].transcript;
+      }
+      input.value = (finalText + interim).trim();
+    };
+    r.onerror = function (e) {
+      errored = true;
+      var err = e && e.error;
+      if (err === 'aborted') return;
+      note(ui[err === 'not-allowed' || err === 'service-not-allowed' ? 'micBlocked' : err === 'no-speech' ? 'micNone' : err === 'audio-capture' ? 'micNoDevice' : err === 'network' ? 'micNet' : 'micErr']);
+    };
+    r.onend = function () {
+      var t = (finalText || input.value).trim();
+      rec = null; micUI(false); input.value = '';
+      if (recAborted || errored) return;
+      if (t) ask(voiceFix(t)); else note(ui.micNone);
+    };
+    rec = r;
+    try { r.start(); } catch (e) { rec = null; micUI(false); note(ui.micErr); }
+  }
+
   function reset() {
-    logEl.innerHTML = ''; state.last = null; state.busy = false; chipsEl.innerHTML = '';
+    logEl.innerHTML = ''; state.last = null; state.busy = false; chipsEl.innerHTML = ''; if (micBtn) micBtn.disabled = false;
     start(true);
   }
   function start(force) {
@@ -855,6 +936,7 @@
       if (prompt) ask(prompt);
       setTimeout(function () { try { input.focus({ preventScroll: true }); } catch (e) {} }, reduce ? 0 : 160);
     } else {
+      stopMic(true);
       moveOrb(false);
       var rf = returnFocus && returnFocus.focus ? returnFocus : doc.querySelector('.uzio-orb');
       returnFocus = null;
