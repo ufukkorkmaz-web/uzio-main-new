@@ -868,8 +868,8 @@
     say(g, lang, true);
   }
 
-  /* ---------- the real Uzio orb moves between the page and the chat header ---------- */
-  var fly = null; /* { wrap, anim, toChat } while the orb is travelling */
+  /* ---------- the real Uzio orb moves between the page, the chat header and the welcome window ---------- */
+  var fly = null; /* { wrap, anim, to } while the orb is travelling */
   function slotEl() { return panel && panel.querySelector('.uai-av'); }
   function slotRect() {
     /* where the header slot will sit once the panel has finished opening (layout values ignore the open transform) */
@@ -887,39 +887,66 @@
     panel.style.setProperty('--uai-b', Math.max(0, docEl.clientHeight - r.bottom) + 'px');
   }
   win.addEventListener('resize', function () { if (state.open) anchorPanel(); });
+  /* The one real orb can live in three places: the page corner ("home"), the chat header ("chat")
+     and the welcome window ("welcome", which wins while it is on screen). */
+  var orbAt = 'home';
+  function welcomeSlot() { return doc.getElementById('onb') && doc.querySelector('.onb-orb'); }
+  function welcomeRect() {
+    var s = welcomeSlot(), x = 0, y = 0, p = s, pad = 14; /* the orb draws a little larger than its badge */
+    while (p) { x += p.offsetLeft; y += p.offsetTop; p = p.offsetParent; } /* layout position: ignores the card's entrance transform */
+    return { left: x - pad, top: y - pad, width: s.offsetWidth + pad * 2, height: s.offsetHeight + pad * 2 };
+  }
+  function hostEl(n) { return n === 'chat' ? slotEl() : n === 'welcome' ? welcomeSlot() : doc.querySelector('.uzio-orb'); }
   function landOrb() {
     if (!fly) return;
     var f = fly; fly = null;
     if (f.anim) { try { f.anim.cancel(); } catch (e) {} }
-    var body = doc.getElementById('orbBody'), link = doc.querySelector('.uzio-orb'), slot = slotEl();
-    if (body && link && slot) {
-      if (f.toChat) { slot.appendChild(body); slot.classList.add('has-orb'); }
-      else { link.appendChild(body); link.style.width = ''; link.style.height = ''; slot.classList.remove('has-orb'); }
+    var body = doc.getElementById('orbBody'), link = doc.querySelector('.uzio-orb'), host = hostEl(f.to);
+    if (body && link && host) {
+      host.appendChild(body);
+      if (f.to === 'home') { link.style.width = ''; link.style.height = ''; }
+      else { host.classList.add('has-orb'); host.classList.toggle('no-gl', link.classList.contains('no-gl')); }
+      orbAt = f.to;
     }
     if (f.wrap.parentNode) f.wrap.parentNode.removeChild(f.wrap);
   }
-  function moveOrb(toChat) {
-    var body = doc.getElementById('orbBody'), link = doc.querySelector('.uzio-orb'), slot = slotEl();
-    if (!body || !link || !slot) return;
+  function moveOrbTo(name) {
+    var body = doc.getElementById('orbBody'), link = doc.querySelector('.uzio-orb');
+    if (!body || !link) return;
     landOrb();
-    if (slot.classList.contains('has-orb') === toChat) return;
-    slot.classList.toggle('no-gl', link.classList.contains('no-gl'));
-    var from = body.getBoundingClientRect(), to;
-    if (toChat) { link.style.width = from.width + 'px'; link.style.height = from.height + 'px'; to = slotRect(); }
-    else to = link.getBoundingClientRect();
-    slot.classList.remove('has-orb');
+    var host = hostEl(name);
+    if (orbAt === name || !host) return;
+    var from = body.getBoundingClientRect(), lr = link.getBoundingClientRect(), prev = hostEl(orbAt);
+    if (orbAt === 'home') { link.style.width = lr.width + 'px'; link.style.height = lr.height + 'px'; } /* keep the corner's box while the orb is away */
+    var to = name === 'home' ? lr : name === 'chat' ? slotRect() : welcomeRect();
+    if (prev && orbAt === 'chat') prev.classList.remove('has-orb');
+    if (name === 'welcome') host.classList.add('has-orb'); /* the old "U" badge never shows again: the orb is on its way */
     var wrap = doc.createElement('div');
     wrap.className = 'uai-fly' + (link.classList.contains('no-gl') ? ' no-gl' : '');
-    wrap.style.cssText = 'left:' + to.left + 'px;top:' + to.top + 'px;width:' + to.width + 'px;height:' + to.height + 'px';
+    wrap.style.cssText = 'left:' + to.left + 'px;top:' + to.top + 'px;width:' + to.width + 'px;height:' + to.height + 'px;z-index:' + (name === 'welcome' || orbAt === 'welcome' ? 160 : 95);
     wrap.appendChild(body); doc.body.appendChild(wrap);
-    fly = { wrap: wrap, toChat: toChat, anim: null };
+    fly = { wrap: wrap, to: name, anim: null };
     if (reduce || !wrap.animate) { landOrb(); return; }
     var dx = from.left - to.left, dy = from.top - to.top, k = from.width / to.width;
     fly.anim = wrap.animate(
       [{ transform: 'translate(' + dx + 'px,' + dy + 'px) scale(' + k + ')' }, { transform: 'translate(0,0) scale(1)' }],
-      { duration: toChat ? 620 : 520, easing: 'cubic-bezier(.32, 1.15, .45, 1)', fill: 'both' });
+      { duration: name === 'home' ? 520 : 620, easing: 'cubic-bezier(.32, 1.15, .45, 1)', fill: 'both' });
     fly.anim.onfinish = landOrb;
   }
+  function orbWanted() {
+    var o = doc.getElementById('onb');
+    return o && o.classList.contains('show') ? 'welcome' : state.open ? 'chat' : 'home';
+  }
+  function syncOrb() {
+    var want = orbWanted();
+    moveOrbTo(want);
+    if (panel && state.open) panel.inert = want === 'welcome'; /* keep the chat out of the tab order behind the welcome window */
+  }
+  (function watchWelcome() {
+    var o = doc.getElementById('onb');
+    if (o) new MutationObserver(syncOrb).observe(o, { attributes: true, attributeFilter: ['class'] });
+    if (o && o.classList.contains('show')) syncOrb();
+  })();
 
   function setOpen(on, prompt) {
     if (!panel) build();
@@ -932,12 +959,12 @@
       returnFocus = doc.activeElement;
       applyLang(); start();
       anchorPanel();
-      moveOrb(true);
+      syncOrb();
       if (prompt) ask(prompt);
       setTimeout(function () { try { input.focus({ preventScroll: true }); } catch (e) {} }, reduce ? 0 : 160);
     } else {
       stopMic(true);
-      moveOrb(false);
+      syncOrb();
       var rf = returnFocus && returnFocus.focus ? returnFocus : doc.querySelector('.uzio-orb');
       returnFocus = null;
       if (rf && rf.focus) try { rf.focus({ preventScroll: true }); } catch (e) {}
