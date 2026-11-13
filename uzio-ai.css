@@ -80,6 +80,17 @@
 }
 .uai-input::placeholder { color: var(--fg2, rgba(60, 60, 67, .55)); }
 .uai-input:focus { box-shadow: 0 0 0 3px color-mix(in srgb, var(--uai-accent) 40%, transparent); }
+.uai-mic {
+  flex: none; width: 44px; height: 44px; display: grid; place-items: center; border: 0; border-radius: 50%; cursor: pointer;
+  color: var(--fg, #000); background: var(--fill, rgba(120, 120, 128, .12));
+  transition: transform .3s cubic-bezier(.32, 1.25, .45, 1), background .2s, color .2s;
+}
+.uai-mic:disabled { opacity: .35; cursor: default; }
+.uai-mic:hover:not(:disabled) { transform: scale(1.08); background: var(--fill2, rgba(120, 120, 128, .2)); }
+.uai-mic svg { width: 21px; height: 21px; fill: none; stroke: currentColor; stroke-width: 2.1; stroke-linecap: round; stroke-linejoin: round; }
+.uai-mic.on, .uai-mic.on:hover:not(:disabled) { color: #fff; background: #ff3b30; animation: uaiPulse 1.4s ease-out infinite; }
+.uai-listening .uai-input { box-shadow: 0 0 0 3px rgba(255, 59, 48, .35); }
+@keyframes uaiPulse { 0% { box-shadow: 0 0 0 0 rgba(255, 59, 48, .5); } 100% { box-shadow: 0 0 0 14px rgba(255, 59, 48, 0); } }
 .uai-send {
   flex: none; width: 44px; height: 44px; display: grid; place-items: center; border: 0; border-radius: 50%; cursor: pointer; color: #fff;
   background: var(--uai-accent); box-shadow: 0 6px 16px color-mix(in srgb, var(--uai-accent) 40%, transparent);
@@ -105,5 +116,5 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .uai, .uai-msg, .uai-chip { transition: opacity .15s linear; animation: none; transform: none; }
-  .uai-typing i { animation: none; }
+  .uai-typing i, .uai-mic.on { animation: none; }
 }
