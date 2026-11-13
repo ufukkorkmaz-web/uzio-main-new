@@ -28,9 +28,13 @@
   position: absolute; inset: 0; width: 100%; height: 100%; animation: none;
   filter: drop-shadow(0 4px 8px var(--orb-shadow, rgba(60, 70, 150, .25)));
 }
-.uai-av canvas, .uai-fly canvas { display: block; width: 100%; height: 100%; }
+/* welcome window: the real orb replaces the old "U" badge */
+.onb-orb.has-orb { overflow: visible; background: none; box-shadow: none; animation: none; }
+.onb-orb.has-orb::before, .onb-orb.has-orb > span:not(.orb-body) { display: none; }
+.onb-orb .orb-body { position: absolute; inset: -14px; width: auto; height: auto; animation: none; filter: drop-shadow(0 8px 14px var(--orb-shadow, rgba(60, 70, 150, .25))); }
+.uai-av canvas, .uai-fly canvas, .onb-orb canvas { display: block; width: 100%; height: 100%; }
 .uai-fly { position: fixed; z-index: 95; margin: 0; pointer-events: none; transform-origin: 0 0; }
-.uai-fly.no-gl canvas, .uai-av.no-gl canvas { background: conic-gradient(from 0deg, #1ea7ff, #ff2d75, #b8ff1f, #b44dff, #ffa11a, #1ea7ff); clip-path: circle(37%); }
+.uai-fly.no-gl canvas, .uai-av.no-gl canvas, .onb-orb.no-gl canvas { background: conic-gradient(from 0deg, #1ea7ff, #ff2d75, #b8ff1f, #b44dff, #ffa11a, #1ea7ff); clip-path: circle(37%); }
 .uai-id { flex: 1; min-width: 0; display: grid; gap: 1px; }
 .uai-id b { font-size: 17px; font-weight: 700; letter-spacing: -.02em; }
 .uai-id small { font-size: 12.5px; color: var(--fg2, rgba(60, 60, 67, .62)); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
