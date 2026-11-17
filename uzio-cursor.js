@@ -18,7 +18,7 @@
     raf = 0;
     if (!loader) return;
     lx += (x - lx) * 0.34; ly += (y - ly) * 0.34; /* a little spring so the ring feels alive */
-    loader.style.transform = 'translate3d(' + (lx + 13) + 'px,' + (ly + 13) + 'px,0)';
+    loader.style.transform = 'translate3d(' + (lx + 15) + 'px,' + (ly + 15) + 'px,0)';
     if (active || fading) raf = requestAnimationFrame(frame);
   }
   function start() { if (!raf) raf = requestAnimationFrame(frame); }
