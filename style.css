@@ -113,8 +113,6 @@ button { font: inherit; color: inherit; }
 .bar.scrolled::before { opacity: 1; }
 
 .brand { display: flex; align-items: center; gap: 10px; justify-self: start; text-decoration: none; color: var(--fg); font-weight: 700; font-size: 19px; letter-spacing: -.02em; }
-.brand-logo{display:block;height:44px;width:auto;max-width:none}
-@media (max-width: 480px) { .brand-logo { height: 36px; } }
 .brand-mark {
   width: 34px; height: 34px; border-radius: 11px; display: grid; place-items: center;
   background: linear-gradient(160deg, color-mix(in srgb, var(--accent) 70%, #fff), var(--accent));
@@ -608,3 +606,7 @@ h1 { margin: 0; font-size: clamp(36px, 6.4vw, 60px); line-height: 1.03; font-wei
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
 }
+
+.brand-logo{height:34px;width:auto;display:block}
+.brand-icon{display:none;width:36px;height:36px}
+@media(max-width:480px){.brand-logo{display:none}.brand-icon{display:block}}
