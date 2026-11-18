@@ -113,6 +113,8 @@ button { font: inherit; color: inherit; }
 .bar.scrolled::before { opacity: 1; }
 
 .brand { display: flex; align-items: center; gap: 10px; justify-self: start; text-decoration: none; color: var(--fg); font-weight: 700; font-size: 19px; letter-spacing: -.02em; }
+.brand-logo{display:block;height:44px;width:auto;max-width:none}
+@media (max-width: 480px) { .brand-logo { height: 36px; } }
 .brand-mark {
   width: 34px; height: 34px; border-radius: 11px; display: grid; place-items: center;
   background: linear-gradient(160deg, color-mix(in srgb, var(--accent) 70%, #fff), var(--accent));
